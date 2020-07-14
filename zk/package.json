@@ -1,0 +1,20 @@
+{
+  "name": "bulls_and_cows",
+  "version": "0.0.1",
+  "description": "",
+  "main": "",
+  "scripts": {
+    "build:circuit:compile": "npx circom circuits/bullsCows.circom -o build/circuits/bullsCows.json && npx snarkjs info -c build/circuits/bullsCows.json",
+    "build:circuit:setup": "npx snarkjs setup --protocol groth -c build/circuits/bullsCows.json --pk build/circuits/bullsCows_proving_key.json --vk build/circuits/bullsCows_verification_key.json",
+    "build:circuit": "mkdir -p build/circuits && npm run build:circuit:compile && npm run build:circuit:setup",
+    "test:circuit": "npm run build:circuit && npx snarkjs calculatewitness -c build/circuits/bullsCows.json -i circuits/bc_input.json -w build/circuits/witness.json && npx snarkjs proof -w build/circuits/witness.json --pk build/circuits/bullsCows_proving_key.json -p build/circuits/proof.json --pub build/circuits/public.json && npx snarkjs verify --vk build/circuits/bullsCows_verification_key.json -p build/circuits/proof.json --pub build/circuits/public.json"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "circom": "0.0.30",
+    "circomlib": "^0.0.10",
+    "snarkjs": "^0.1.16"
+  }
+}
