@@ -9,6 +9,8 @@
         .body {
             font-family: 'Source Sans Pro', sans-serif;
             font-weight: 400;
+            width: 1200px;
+            margin: 0 auto;
         }
 
         .header {
@@ -23,6 +25,16 @@
             font-weight: 200;
             font-size: 4em;
             line-height: 0;
+        }
+
+        .block-wrapper {
+            display: inline-block;
+            width: 49%;
+            text-align: center;
+        }
+
+        .block {
+            margin: 0 auto;
         }
 
         .github-corner:hover .octo-arm {
@@ -49,6 +61,10 @@
             .github-corner .octo-arm {
                 animation: octocat-wave 560ms ease-in-out
             }
+
+            .block-wrapper {
+                width: 100%;
+            }
         }
     </style>
 </head>
@@ -58,26 +74,33 @@
     <img class="header-image" src="assets/cow.svg" alt=""/>
     <h1 class="header-title">Bulls & Cows</h1>
 </header>
-<article>
-    <h2>List of games:</h2>
-    <table>
-        <thead>
-        <tr>
-            <td>Game Id</td>
-            <td>Bet</td>
-            <td></td>
-        </tr>
-        </thead>
-        <tbody>
-        <tr>
-            <td>1f4wd4</td>
-            <td>40 ETH</td>
-            <td>
-                <button>Start Game</button>
-            </td>
-        </tr>
-        </tbody>
-    </table>
+<article class="block-wrapper">
+    <div class="block">
+        <h2>List of games</h2>
+        <table>
+            <thead>
+            <tr>
+                <td>Game Id</td>
+                <td>Bet</td>
+                <td></td>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>1f4wd4</td>
+                <td>40 ETH</td>
+                <td>
+                    <button>Start Game</button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</article>
+<article class="block-wrapper">
+    <div class="block">
+        <h2>Create new game</h2>
+    </div>
 </article>
 
 <a href="https://your-url" class="github-corner" aria-label="View source on GitHub">
