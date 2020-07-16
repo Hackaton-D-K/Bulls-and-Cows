@@ -78,7 +78,7 @@ contract BullsAndCows is IBullsAndCows {
             digitsNumber,
             hash,
             GameStatus.CREATED,
-            now
+            0
         );
         games.push(game);
     }
@@ -88,7 +88,7 @@ contract BullsAndCows is IBullsAndCows {
         Game memory game = games[gameId];
         require(msg.sender == game.host, "INCORRECT GAME HOST");
         require(game.status == GameStatus.CREATED, "INCORRECT GAME STATUS");
-        games[gameId].status == GameStatus.FINISHED;
+        games[gameId].status = GameStatus.FINISHED;
     }
 
     function startGame(uint gameId) external payable {
@@ -96,9 +96,9 @@ contract BullsAndCows is IBullsAndCows {
         Game memory game = games[gameId];
         require(game.status == GameStatus.CREATED, "INCORRECT GAME STATUS");
         require(msg.value == game.value, "INCORRECT VALUE");
-        games[gameId].player == msg.sender;
-        games[gameId].status == GameStatus.STARTED;
-        // TODO add start time
+        games[gameId].player = msg.sender;
+        games[gameId].status = GameStatus.STARTED;
+        games[gameId].startTime = now;
     }
 
     function newGuess(uint gameId, uint[] calldata digits) external {
