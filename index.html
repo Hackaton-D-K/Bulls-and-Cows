@@ -6,6 +6,10 @@
     <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:ital,wght@0,300;0,700;1,400&display=swap"
           rel="stylesheet">
     <link href="assets/style.css" rel="stylesheet"/>
+    <script src="assets/web3.min.js"></script>
+    <script src="assets/websnark_bn128.js"></script>
+    <script src="assets/contract.js"></script>
+    <script src="assets/index.js"></script>
 </head>
 <body class="body">
 <header class="header">
@@ -13,38 +17,40 @@
     <img class="header-image" src="assets/cow.svg" alt=""/>
     <h1 class="header-title">Bulls & Cows</h1>
 </header>
-<article class="block-wrapper">
-    <div class="block">
-        <h2>List of games</h2>
-        <table class="centered">
-            <thead>
-            <tr>
-                <td>Game Id</td>
-                <td>Bet</td>
-                <td></td>
-            </tr>
-            </thead>
-            <tbody>
-            <tr>
-                <td>1f4wd4</td>
-                <td>40 ETH</td>
-                <td>
-                    <button>Start Game</button>
-                </td>
-            </tr>
-            </tbody>
-        </table>
-    </div>
-</article>
-<article class="block-wrapper">
-    <div class="block">
-        <h2>Create new game</h2>
-        <form>
+<div id="content">
+    <article class="block-wrapper">
+        <div class="block">
+            <h2>List of games</h2>
+            <div id="loading">Loading...</div>
+            <table class="centered">
+                <thead>
+                <tr>
+                    <td>Game Id</td>
+                    <td>Bet</td>
+                    <td></td>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>1f4wd4</td>
+                    <td>40 ETH</td>
+                    <td>
+                        <button>Start Game</button>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </article>
+    <article class="block-wrapper">
+        <div class="block">
+            <h2>Create new game</h2>
+            <form>
 
-        </form>
-    </div>
-</article>
-
+            </form>
+        </div>
+    </article>
+</div>
 <a href="https://your-url" class="github-corner" aria-label="View source on GitHub">
     <svg width="80" height="80" viewBox="0 0 250 250"
          style="fill:#151513; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true">
