@@ -1,6 +1,8 @@
 pragma solidity 0.5.11;
 pragma experimental ABIEncoderV2;
 
+import "./verifier.sol";
+
 
 contract IBullsAndCows {
     struct Proof {
@@ -9,7 +11,7 @@ contract IBullsAndCows {
         uint[2]  pi_c;
     }
 
-    function newGame(uint value, uint digitsNumber, uint guessNumber, string calldata hash) external payable returns (uint);
+    function newGame(uint value, uint digitsNumber, uint guessNumber, uint hash) external payable returns (uint);
     function deleteGame(uint gameId) external;
     function startGame(uint gameId) external payable;
     function newGuess(uint gameId, uint[] calldata digits) external;
@@ -35,7 +37,7 @@ contract BullsAndCows is IBullsAndCows {
         uint guessNumber;
         uint guessCounter;
         uint digitsNumber;
-        string hash;
+        uint hash;
         GameStatus status;
         uint startTime;
     }
@@ -64,7 +66,7 @@ contract BullsAndCows is IBullsAndCows {
         uint value,
         uint digitsNumber,
         uint guessNumber,
-        string calldata hash
+        uint hash
     ) external payable returns (uint) {
         require(msg.value == value, "INCORRECT VALUE");
         // TODO check digitsNumber consistency [4,5,6]
@@ -155,8 +157,25 @@ contract BullsAndCows is IBullsAndCows {
         Guess storage guess = guesses[gameId][guessId];
         require(guess.status == GuessStatus.RESPONDED, "INCORRECT GUESS STATUS");
 
-        // TODO verify proof
-        bool result = true;
+        uint[11] memory publicInputs = [
+            guess.bulls,
+            guess.cows,
+            game.hash,
+            guess.digits[0],
+            guess.digits[1],
+            guess.digits[2],
+            guess.digits[3],
+            guess.digits[4],
+            guess.digits[5],
+            guess.digits[6],
+            guess.digits[7]
+        ];
+        bool result = Verifier.verifyProof(
+            guess.proof.pi_a,
+            guess.proof.pi_b,
+            guess.proof.pi_c,
+            publicInputs
+        );
         if (result != true) {
             // player won
             games[gameId].status = GameStatus.FINISHED;

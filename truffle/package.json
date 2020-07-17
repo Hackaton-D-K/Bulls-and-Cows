@@ -1,0 +1,51 @@
+{
+  "name": "bulls-and-cows-contracts",
+  "version": "1.0.0",
+  "main": "truffle.js",
+  "directories": {
+    "test": "test"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@babel/core": "7.8.6",
+    "@babel/register": "7.8.6",
+    "@babel/compat-data": "~7.8.0",
+    "@truffle/hdwallet-provider": "1.0.32",
+    "@types/bignumber.js": "^5.0.0",
+    "babel-cli": "6.26.0",
+    "babel-plugin-transform-runtime": "6.23.0",
+    "babel-polyfill": "6.26.0",
+    "babel-preset-env": "1.7.0",
+    "babel-register": "6.26.0",
+    "core-js": "3.6.4",
+    "dotenv": "8.2.0",
+    "node-gyp": "^6.1.0",
+    "regenerator-runtime": "0.13.3",
+    "solc": "0.5.16",
+    "truffle": "5.1.18",
+    "truffle-plugin-verify": "0.3.9"
+  },
+  "devDependencies": {
+    "@babel/preset-env": "^7.8.6",
+    "@codechecks/client": "0.1.10",
+    "eslint": "6.8.0",
+    "eslint-config-airbnb-base": "14.0.0",
+    "eslint-plugin-import": "2.20.1",
+    "eth-gas-reporter": "0.2.15",
+    "ethlint": "1.2.5",
+    "ganache-cli": "6.9.1",
+    "solhint": "3.0.0-rc.6",
+    "solidity-coverage": "0.7.2"
+  },
+  "scripts": {
+    "compile": "npx truffle compile",
+    "deploy:development": "npx truffle deploy --network development",
+    "test": "scripts/test.sh",
+    "coverage": "node --max-old-space-size=4096 ./node_modules/.bin/truffle run coverage",
+    "lint:solhint": "npx solhint \"./contracts/**/*.sol\"",
+    "lint:ethlint": "npx ethlint --dir contracts/",
+    "lint:eslint": "eslint .",
+    "lint": "npm run lint:solhint && npm run lint:ethlint && npm run lint:eslint"
+  }
+}
