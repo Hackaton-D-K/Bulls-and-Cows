@@ -70,4 +70,4 @@ template BullsCows(n) {
     cows <-- zero + c - b;
 }
 
-component main = BullsCows(6)
+component main = BullsCows(8)
