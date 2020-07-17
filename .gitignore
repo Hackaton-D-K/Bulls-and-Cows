@@ -2,3 +2,6 @@ node_modules/
 zk/build/circuits/bullsCows.json
 zk/build/circuits/witness.json
 ganache.log
+
+truffle/build/contracts/*
+!truffle/build/contracts/BullsAndCows.json
