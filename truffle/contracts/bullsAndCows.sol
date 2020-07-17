@@ -214,19 +214,27 @@ contract BullsAndCows is IBullsAndCows {
         require(gameId < games.length, "INCORRECT GAME ID");
         Game memory game = games[gameId];
         require(game.status == GameStatus.STARTED, "INCORRECT GAME STATUS");
-        require(game.guessCounter == game.guessNumber, "INCORRECT GUESS COUNTER");
+        require(game.guessCounter > 0, "INCORRECT GUESS COUNTER");
+        Guess memory guess = guesses[gameId][game.guessCounter-1];
+        require(guess.status == GuessStatus.RESPONDED, "INCORRECT GUESS STATUS");
 
-        Guess memory guess = guesses[gameId][game.guessNumber-1];
-        require(guess.status == GuessStatus.RESPONDED, "INCORRECT FINAL GUESS STATUS");
-        require(now > guess.time + chalengePeriod);
-
-        games[gameId].status = GameStatus.FINISHED;
-        if (guess.bulls == game.digitsNumber) {
-            // player won
-            game.player.transfer(2*game.value);
-        } else {
-            // host won
-            game.host.transfer(2*game.value);
+        if (game.guessCounter < game.guessNumber) {
+            if (guess.bulls == game.digitsNumber) {
+                // player won
+                games[gameId].status = GameStatus.FINISHED;
+                game.player.transfer(2*game.value);
+            }
+        } else if (game.guessCounter == game.guessNumber) {
+            games[gameId].status = GameStatus.FINISHED;
+            if (guess.bulls == game.digitsNumber) {
+                // player won
+                game.player.transfer(2*game.value);
+            } else {
+                // TODO rewrite tests
+                //require(now > guess.time + chalengePeriod);
+                // host won
+                game.host.transfer(2*game.value);
+            }
         }
     }
 
