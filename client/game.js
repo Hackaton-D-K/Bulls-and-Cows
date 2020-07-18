@@ -13,7 +13,13 @@ async function load() {
 
     const gameId = new URLSearchParams(window.location.search).get('gameId');
     document.getElementById('gameId').innerText = "#" + gameId;
-    const game = await myContract.methods.games(gameId).call();
+    var game;
+    try {
+        game = await myContract.methods.games(gameId).call();
+    } catch (er) {
+        document.getElementById('content').innerHTML = `<h1>Game #${gameId} doesn't exist</h1>`;
+        throw new Error(er);
+    }
     document.getElementById('host').innerText = game.host;
     document.getElementById('bet').innerText = game.value;
     document.getElementById('guesses').innerText = game.guessNumber;
