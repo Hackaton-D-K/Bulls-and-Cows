@@ -6,6 +6,10 @@
     <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:ital,wght@0,300;0,700;1,400&display=swap"
           rel="stylesheet">
     <link href="client/style.css" rel="stylesheet"/>
+    <script src="client/web3.min.js"></script>
+    <script src="client/websnark_bn128.js"></script>
+    <script src="client/contract.js"></script>
+    <script src="client/game.js"></script>
 </head>
 <body class="body">
 <header class="header">
@@ -14,10 +18,14 @@
         <img class="header-image" src="client/cow.svg" alt=""/>
     </a>
     <h1 class="header-title"><a class="header-link" href="index.html">Bulls & Cows</a></h1>
-
 </header>
 <article>
-    <h2>Game #12fr</h2>
+    <h2>Game <span id="gameId"></span></h2>
+    <div id="loading">Loading...</div>
+    <div id="game">
+        <p>You're playing with <span id="host"></span> for <span id="bet"></span> ETH.</p>
+        <p>You have <span id="guesses"></span> guesses.</p>
+    </div>
 </article>
 
 <a href="https://your-url" class="github-corner" aria-label="View source on GitHub">
