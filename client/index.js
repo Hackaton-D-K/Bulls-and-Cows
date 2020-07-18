@@ -15,26 +15,12 @@ async function load() {
 
     const gamesCount = parseInt(await myContract.methods.getGamesCount().call());
     for (let i = 0; i < gamesCount; i++) {
-        let address = await myContract.methods.traders(i).call();
-        let email = await myContract.methods.emails(address).call();
-        let proofLen = parseInt(await myContract.methods.getProofLen(address).call());
-        if (proofLen === 0) {
-            games.innerHTML += `<tr><td>Trader ${i}:</td><td>${email}</td><td>${address}</td><td>No periods found</td></tr>`;
+        const game = await myContract.methods.games(i).call();
+        console.log(game);
+        if (game.status != 0) {
             continue;
         }
-        let proofsAndYelds = ``;
-        for (let j = 0; j < proofLen; j++) {
-            let periodProof = await myContract.methods.periodProofs(address, j).call();
-            let lastPeriodProof = {y: null};
-            if (j === 0) {
-                lastPeriodProof.y = 1000;
-            } else {
-                lastPeriodProof = await myContract.methods.periodProofs(address, j - 1).call();
-            }
-            let profit = (((periodProof.y - lastPeriodProof.y) / lastPeriodProof.y) * 100).toFixed(2);
-            proofsAndYelds += `<span class="yeld">${j}. Profit: <span class="${profit < 0 ? 'failed' : 'good'}">${profit}%</span> <span id="verify-${address}-${j}"><a href="#" onclick="verifyProofByIndex('${address}', ${j}); return false;" class="proof-verify">Verify</a></span></span>`;
-        }
-        games.innerHTML += `<tr><td><b>Trader ${i}:</b></td><td>${email}</td><td>${address}</td><td>${proofsAndYelds}</td></tr>`;
+        games.innerHTML += `<tr><td>${game.hash.substring(0, 5)}</td><td>${game.guessNumber}</td><td>${game.guessCounter}</td><td>${game.value} ETH</td><td>${game.host}</td><td><button>Start Game</button></td></tr>`;
     }
 
 }

@@ -4,28 +4,8 @@
 })(window, document);
 
 window.contractData = {
-    address: '0xec17b4b511fca0324e1049ca1979899644fee4f1',
+    address: '0x50f8e325cf9743b5f05ac2869c3bd661f59cf879',
     abi: [
-        {
-            "constant": false,
-            "inputs": [
-                {
-                    "internalType": "uint256",
-                    "name": "gameId",
-                    "type": "uint256"
-                },
-                {
-                    "internalType": "uint256",
-                    "name": "guessId",
-                    "type": "uint256"
-                }
-            ],
-            "name": "chalengeResult",
-            "outputs": [],
-            "payable": false,
-            "stateMutability": "nonpayable",
-            "type": "function"
-        },
         {
             "constant": true,
             "inputs": [
@@ -68,9 +48,9 @@ window.contractData = {
                     "type": "uint256"
                 },
                 {
-                    "internalType": "string",
+                    "internalType": "uint256",
                     "name": "hash",
-                    "type": "string"
+                    "type": "uint256"
                 },
                 {
                     "internalType": "enum BullsAndCows.GameStatus",
@@ -85,154 +65,6 @@ window.contractData = {
             ],
             "payable": false,
             "stateMutability": "view",
-            "type": "function"
-        },
-        {
-            "constant": true,
-            "inputs": [],
-            "name": "getGamesCount",
-            "outputs": [
-                {
-                    "internalType": "uint256",
-                    "name": "",
-                    "type": "uint256"
-                }
-            ],
-            "payable": false,
-            "stateMutability": "view",
-            "type": "function"
-        },
-        {
-            "constant": false,
-            "inputs": [
-                {
-                    "internalType": "uint256",
-                    "name": "gameId",
-                    "type": "uint256"
-                }
-            ],
-            "name": "deleteGame",
-            "outputs": [],
-            "payable": false,
-            "stateMutability": "nonpayable",
-            "type": "function"
-        },
-        {
-            "constant": false,
-            "inputs": [
-                {
-                    "internalType": "uint256",
-                    "name": "value",
-                    "type": "uint256"
-                },
-                {
-                    "internalType": "uint256",
-                    "name": "digitsNumber",
-                    "type": "uint256"
-                },
-                {
-                    "internalType": "uint256",
-                    "name": "guessNumber",
-                    "type": "uint256"
-                },
-                {
-                    "internalType": "string",
-                    "name": "hash",
-                    "type": "string"
-                }
-            ],
-            "name": "newGame",
-            "outputs": [
-                {
-                    "internalType": "uint256",
-                    "name": "",
-                    "type": "uint256"
-                }
-            ],
-            "payable": true,
-            "stateMutability": "payable",
-            "type": "function"
-        },
-        {
-            "constant": false,
-            "inputs": [
-                {
-                    "internalType": "uint256",
-                    "name": "gameId",
-                    "type": "uint256"
-                },
-                {
-                    "internalType": "uint256",
-                    "name": "guessId",
-                    "type": "uint256"
-                },
-                {
-                    "internalType": "uint256",
-                    "name": "bulls",
-                    "type": "uint256"
-                },
-                {
-                    "internalType": "uint256",
-                    "name": "cows",
-                    "type": "uint256"
-                },
-                {
-                    "components": [
-                        {
-                            "internalType": "uint256[2]",
-                            "name": "pi_a",
-                            "type": "uint256[2]"
-                        },
-                        {
-                            "internalType": "uint256[2][2]",
-                            "name": "pi_b",
-                            "type": "uint256[2][2]"
-                        },
-                        {
-                            "internalType": "uint256[2]",
-                            "name": "pi_c",
-                            "type": "uint256[2]"
-                        }
-                    ],
-                    "internalType": "struct IBullsAndCows.Proof",
-                    "name": "proof",
-                    "type": "tuple"
-                }
-            ],
-            "name": "guessResult",
-            "outputs": [],
-            "payable": false,
-            "stateMutability": "nonpayable",
-            "type": "function"
-        },
-        {
-            "constant": false,
-            "inputs": [
-                {
-                    "internalType": "uint256",
-                    "name": "gameId",
-                    "type": "uint256"
-                }
-            ],
-            "name": "forceStopGame",
-            "outputs": [],
-            "payable": false,
-            "stateMutability": "nonpayable",
-            "type": "function"
-        },
-        {
-            "constant": false,
-            "inputs": [
-                {
-                    "internalType": "uint256",
-                    "name": "gameId",
-                    "type": "uint256"
-                }
-            ],
-            "name": "finalizeGame",
-            "outputs": [],
-            "payable": false,
-            "stateMutability": "nonpayable",
             "type": "function"
         },
         {
@@ -303,6 +135,57 @@ window.contractData = {
             "inputs": [
                 {
                     "internalType": "uint256",
+                    "name": "value",
+                    "type": "uint256"
+                },
+                {
+                    "internalType": "uint256",
+                    "name": "digitsNumber",
+                    "type": "uint256"
+                },
+                {
+                    "internalType": "uint256",
+                    "name": "guessNumber",
+                    "type": "uint256"
+                },
+                {
+                    "internalType": "uint256",
+                    "name": "hash",
+                    "type": "uint256"
+                }
+            ],
+            "name": "newGame",
+            "outputs": [
+                {
+                    "internalType": "uint256",
+                    "name": "",
+                    "type": "uint256"
+                }
+            ],
+            "payable": true,
+            "stateMutability": "payable",
+            "type": "function"
+        },
+        {
+            "constant": false,
+            "inputs": [
+                {
+                    "internalType": "uint256",
+                    "name": "gameId",
+                    "type": "uint256"
+                }
+            ],
+            "name": "deleteGame",
+            "outputs": [],
+            "payable": false,
+            "stateMutability": "nonpayable",
+            "type": "function"
+        },
+        {
+            "constant": false,
+            "inputs": [
+                {
+                    "internalType": "uint256",
                     "name": "gameId",
                     "type": "uint256"
                 }
@@ -332,6 +215,123 @@ window.contractData = {
             "payable": false,
             "stateMutability": "nonpayable",
             "type": "function"
+        },
+        {
+            "constant": false,
+            "inputs": [
+                {
+                    "internalType": "uint256",
+                    "name": "gameId",
+                    "type": "uint256"
+                },
+                {
+                    "internalType": "uint256",
+                    "name": "guessId",
+                    "type": "uint256"
+                },
+                {
+                    "internalType": "uint256",
+                    "name": "bulls",
+                    "type": "uint256"
+                },
+                {
+                    "internalType": "uint256",
+                    "name": "cows",
+                    "type": "uint256"
+                },
+                {
+                    "components": [
+                        {
+                            "internalType": "uint256[2]",
+                            "name": "pi_a",
+                            "type": "uint256[2]"
+                        },
+                        {
+                            "internalType": "uint256[2][2]",
+                            "name": "pi_b",
+                            "type": "uint256[2][2]"
+                        },
+                        {
+                            "internalType": "uint256[2]",
+                            "name": "pi_c",
+                            "type": "uint256[2]"
+                        }
+                    ],
+                    "internalType": "struct IBullsAndCows.Proof",
+                    "name": "proof",
+                    "type": "tuple"
+                }
+            ],
+            "name": "guessResult",
+            "outputs": [],
+            "payable": false,
+            "stateMutability": "nonpayable",
+            "type": "function"
+        },
+        {
+            "constant": false,
+            "inputs": [
+                {
+                    "internalType": "uint256",
+                    "name": "gameId",
+                    "type": "uint256"
+                },
+                {
+                    "internalType": "uint256",
+                    "name": "guessId",
+                    "type": "uint256"
+                }
+            ],
+            "name": "chalengeResult",
+            "outputs": [],
+            "payable": false,
+            "stateMutability": "nonpayable",
+            "type": "function"
+        },
+        {
+            "constant": false,
+            "inputs": [
+                {
+                    "internalType": "uint256",
+                    "name": "gameId",
+                    "type": "uint256"
+                }
+            ],
+            "name": "forceStopGame",
+            "outputs": [],
+            "payable": false,
+            "stateMutability": "nonpayable",
+            "type": "function"
+        },
+        {
+            "constant": false,
+            "inputs": [
+                {
+                    "internalType": "uint256",
+                    "name": "gameId",
+                    "type": "uint256"
+                }
+            ],
+            "name": "finalizeGame",
+            "outputs": [],
+            "payable": false,
+            "stateMutability": "nonpayable",
+            "type": "function"
+        },
+        {
+            "constant": true,
+            "inputs": [],
+            "name": "getGamesCount",
+            "outputs": [
+                {
+                    "internalType": "uint256",
+                    "name": "",
+                    "type": "uint256"
+                }
+            ],
+            "payable": false,
+            "stateMutability": "view",
+            "type": "function"
         }
-    ]
+    ],
 };

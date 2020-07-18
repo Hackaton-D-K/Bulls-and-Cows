@@ -18,38 +18,30 @@
     <h1 class="header-title">Bulls & Cows</h1>
 </header>
 <div id="content">
-    <article class="block-wrapper">
-        <div class="block">
-            <h2>List of games</h2>
-            <div id="loading">Loading...</div>
-            <table class="centered">
-                <thead>
-                <tr>
-                    <td>Game Id</td>
-                    <td>Bet</td>
-                    <td></td>
-                </tr>
-                </thead>
-                <tbody>
-                <tr>
-                    <td>1f4wd4</td>
-                    <td>40 ETH</td>
-                    <td>
-                        <button>Start Game</button>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
-        </div>
-    </article>
-    <article class="block-wrapper">
-        <div class="block">
-            <h2>Create new game</h2>
-            <form>
+    <div class="block">
+        <h2>List of games</h2>
+        <div id="loading">Loading...</div>
+        <table class="centered">
+            <thead>
+            <tr>
+                <td>Game Id</td>
+                <td>Guess Number</td>
+                <td>Guess Count</td>
+                <td>Bet</td>
+                <td>Host</td>
+                <td></td>
+            </tr>
+            </thead>
+            <tbody id="games">
+            </tbody>
+        </table>
+    </div>
+    <div class="block">
+        <h2>Create new game</h2>
+        <form>
 
-            </form>
-        </div>
-    </article>
+        </form>
+    </div>
 </div>
 <a href="https://your-url" class="github-corner" aria-label="View source on GitHub">
     <svg width="80" height="80" viewBox="0 0 250 250"
