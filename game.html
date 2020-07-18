@@ -23,8 +23,13 @@
     <h2>Game <span id="gameId"></span></h2>
     <div id="loading">Loading...</div>
     <div id="game">
-        <p>You're playing with <span id="host"></span> for <span id="bet"></span> ETH.</p>
+        <p>The game with <span id="host"></span> for <span id="bet"></span> ETH.</p>
         <p>You have <span id="guesses"></span> guesses.</p>
+        <div class="yourbet" id="yourbet">
+            <form id="bet-form" name="bet-form">
+                <input class="button" type="submit" id="bet-submit" name="bet-submit" value="Start Game"/>
+            </form>
+        </div>
     </div>
 </div>
 

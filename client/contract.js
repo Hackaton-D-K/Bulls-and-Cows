@@ -4,7 +4,7 @@
 })(window, document);
 
 window.contractData = {
-    address: '0x50f8e325cf9743b5f05ac2869c3bd661f59cf879',
+    address: '0x5dab3984a4e3497996eb6fcab8600cfb4dfde9b7',
     abi: [
         {
             "constant": true,

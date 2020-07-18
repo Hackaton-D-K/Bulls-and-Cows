@@ -18,7 +18,7 @@ async function load() {
         if (game.status != 0) {
             continue;
         }
-        games.innerHTML += `<tr><td>${i}</td><td>${game.guessNumber}</td><td>${game.guessCounter}</td><td>${game.value} ETH</td><td>${game.host}</td><td><a href="game.hrml?gameId=${i}">Start Game</a></td></tr>`;
+        games.innerHTML += `<tr><td>${i}</td><td>${game.guessNumber}</td><td>${game.guessCounter}</td><td>${game.value} ETH</td><td>${game.host}</td><td><a href="game.html?gameId=${i}">Start Game</a></td></tr>`;
     }
 }
 

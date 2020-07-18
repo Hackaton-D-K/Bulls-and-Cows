@@ -11,7 +11,7 @@ async function load() {
 
     document.getElementById('loading').innerText = '';
 
-    const gameId = new URLSearchParams(window.location.search).get('gameId');
+    const gameId = parseInt(new URLSearchParams(window.location.search).get('gameId'));
     document.getElementById('gameId').innerText = "#" + gameId;
     let game;
     try {
@@ -23,6 +23,15 @@ async function load() {
     document.getElementById('host').innerText = game.host;
     document.getElementById('bet').innerText = game.value;
     document.getElementById('guesses').innerText = game.guessNumber;
+
+    document.getElementById('bet-form').addEventListener('submit', (event) => {
+        (async () => {
+            await startGame(gameId, game.value);
+            document.getElementById('yourbet').classList.add('hidden');
+
+        })();
+        event.preventDefault();
+    }, false);
 }
 
 async function startGame(gameId, bet) {
