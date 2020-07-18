@@ -12,7 +12,6 @@ async function load() {
     document.getElementById('loading').innerText = '';
 
     const games = document.getElementById('games');
-
     const gamesCount = parseInt(await myContract.methods.getGamesCount().call());
     for (let i = 0; i < gamesCount; i++) {
         const game = await myContract.methods.games(i).call();
