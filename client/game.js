@@ -21,20 +21,16 @@ async function load() {
         throw new Error(er);
     }
     document.getElementById('host').innerText = game.host;
-    document.getElementById('bet').innerText = game.value;
+    const bet = web3.utils.fromWei(game.value, 'ether');
+    document.getElementById('bet').innerText = bet;
     document.getElementById('guesses').innerText = game.guessNumber;
 
     document.getElementById('bet-form').addEventListener('submit', (event) => {
         (async () => {
-            await startGame(gameId, game.value);
+            await myContract.methods.startGame(gameId).send({from: accounts[0], value: game.value});
             document.getElementById('yourbet').classList.add('hidden');
 
         })();
         event.preventDefault();
     }, false);
-}
-
-async function startGame(gameId, bet) {
-    const weiValue = web3.utils.toWei(bet.toString(), 'ether');
-    await myContract.methods.startGame(gameId).send({from: accounts[0], value: weiValue});
 }

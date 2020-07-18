@@ -15,10 +15,15 @@ async function load() {
     const gamesCount = parseInt(await myContract.methods.getGamesCount().call());
     for (let i = 0; i < gamesCount; i++) {
         const game = await myContract.methods.games(i).call();
-        if (game.status != 0) {
+        let status;
+        if (game.status == 0) {
+            status = 'New';
+        } else if (game.status == 1) {
+            status = 'Started';
+        } else {
             continue;
         }
-        games.innerHTML += `<tr><td>${i}</td><td>${game.guessNumber}</td><td>${game.guessCounter}</td><td>${web3.utils.fromWei(game.value, 'ether')} ETH</td><td>${game.host}</td><td><a href="game.html?gameId=${i}">Start Game</a></td></tr>`;
+        games.innerHTML += `<tr><td>${i}</td><td>${game.guessNumber}</td><td>${game.guessCounter}</td><td>${web3.utils.fromWei(game.value, 'ether')} ETH</td><td>${game.host}</td><td>${status}</td><td><a href="game.html?gameId=${i}">Open Game</a></td></tr>`;
     }
 }
 
