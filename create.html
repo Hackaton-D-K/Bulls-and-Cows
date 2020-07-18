@@ -27,30 +27,40 @@
         <h2>Create new game</h2>
         <div id="loading">Loading...</div>
         <form id="create-form" name="create-form">
-            <label>
-                Symbols (all ASCII characters are supported)
-                <input class="symbol" id="symbol0" name="symbol0" type="text" data-mask="_" />
-                <input class="symbol" id="symbol1" name="symbol1" type="text" data-mask="_" />
-                <input class="symbol" id="symbol2" name="symbol2" type="text" data-mask="_" />
-                <input class="symbol" id="symbol3" name="symbol3" type="text" data-mask="_" />
-                <input class="symbol" id="symbol4" name="symbol4" type="text" data-mask="_" />
-                <input class="symbol" id="symbol5" name="symbol5" type="text" data-mask="_" />
-                <input class="symbol" id="symbol6" name="symbol6" type="text" data-mask="_" />
-                <input class="symbol" id="symbol7" name="symbol7" type="text" data-mask="_" />
-            </label>
-            <label>
-                Guess Number
-                <input id="guessNumber" name="guessNumber" type="number" />
-            </label>
-            <label>
-                Bet
-                <input id="bet" name="bet" type="text" />
-            </label>
-            <label>
-                Nonce
-                <input id="nonce" name="nonce" type="number" />
-            </label>
-            <input class="button" type="submit" id="generate-submit" name="generate-submit" value="Create Game"/>
+            <div>
+                <label>
+                    Symbols (all ASCII characters are supported)
+                    <input class="symbol" id="symbol0" name="symbol0" type="text" data-mask="_"/>
+                    <input class="symbol" id="symbol1" name="symbol1" type="text" data-mask="_"/>
+                    <input class="symbol" id="symbol2" name="symbol2" type="text" data-mask="_"/>
+                    <input class="symbol" id="symbol3" name="symbol3" type="text" data-mask="_"/>
+                    <input class="symbol" id="symbol4" name="symbol4" type="text" data-mask="_"/>
+                    <input class="symbol" id="symbol5" name="symbol5" type="text" data-mask="_"/>
+                    <input class="symbol" id="symbol6" name="symbol6" type="text" data-mask="_"/>
+                    <input class="symbol" id="symbol7" name="symbol7" type="text" data-mask="_"/>
+                </label>
+            </div>
+            <div>
+                <label>
+                    Guess Number
+                    <input id="guessNumber" name="guessNumber" type="number"/>
+                </label>
+            </div>
+            <div>
+                <label>
+                    Bet
+                    <input id="bet" name="bet" type="text"/>
+                </label>
+            </div>
+            <div>
+                <label>
+                    Nonce
+                    <input id="nonce" name="nonce" type="number"/>
+                </label>
+            </div>
+            <div>
+                <input class="button" type="submit" id="generate-submit" name="generate-submit" value="Create Game"/>
+            </div>
         </form>
     </div>
 </div>

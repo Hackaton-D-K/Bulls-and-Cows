@@ -16,13 +16,25 @@ window.witness = function (input) {
     const circomlib = require('circomlib');
     window.pedersenHash = (data) => circomlib.babyJub.unpackPoint(circomlib.pedersenHash.hash(data))[0];
 
-    window.signalHash = (type, amount, nonce) => {
-        let typeB = Buffer.alloc(1);
-        typeB.writeInt8(type);
-        let amountB = Buffer.alloc(17);
-        amountB.writeInt8(amount);
-        let nonceB = Buffer.alloc(14);
+    window.signalHash = (symbols, nonce) => {
+        let symbol0 = Buffer.alloc(1);
+        symbol0.writeInt8(symbols[0]);
+        let symbol1 = Buffer.alloc(1);
+        symbol1.writeInt8(symbols[1]);
+        let symbol2 = Buffer.alloc(1);
+        symbol2.writeInt8(symbols[2]);
+        let symbol3 = Buffer.alloc(1);
+        symbol3.writeInt8(symbols[3]);
+        let symbol4 = Buffer.alloc(1);
+        symbol4.writeInt8(symbols[4]);
+        let symbol5 = Buffer.alloc(1);
+        symbol5.writeInt8(symbols[5]);
+        let symbol6 = Buffer.alloc(1);
+        symbol6.writeInt8(symbols[6]);
+        let symbol7 = Buffer.alloc(1);
+        symbol7.writeInt8(symbols[7]);
+        let nonceB = Buffer.alloc(24);
         nonceB.writeInt8(nonce);
-        return stringifyBigInts(pedersenHash(Buffer.concat([typeB, amountB, nonceB])));
+        return stringifyBigInts(pedersenHash(Buffer.concat([symbol0, amountB, nonceB])));
     };
 })();

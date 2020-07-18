@@ -1,3 +1,8 @@
+td {
+    padding: .5em;
+    text-align: center;
+}
+
 .body {
     font-family: 'Source Sans Pro', sans-serif;
     font-weight: 400;

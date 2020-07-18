@@ -20,23 +20,25 @@ async function load() {
             const guessNumber = parseInt(document.getElementById('guessNumber').value);
             const bet = document.getElementById('bet').value;
             const nonce = document.getElementById('nonce').value;
-            let input = {
-                "digits": symbols,
-                "salt": parseInt(nonce)
-            };
-            const proof = await window.witness(input);
-            let newVar = {
-                pi_a: [web3.eth.abi.encodeParameter('uint256', proof.pi_a[0]), web3.eth.abi.encodeParameter('uint256', proof.pi_a[1])],
-                pi_b: [[
-                    web3.eth.abi.encodeParameter('uint256', proof.pi_b[0][0]), web3.eth.abi.encodeParameter('uint256', proof.pi_b[0][1])
-                ], [
-                    web3.eth.abi.encodeParameter('uint256', proof.pi_b[1][0]), web3.eth.abi.encodeParameter('uint256', proof.pi_b[1][1])
-                ]],
-                pi_c: [web3.eth.abi.encodeParameter('uint256', proof.pi_c[0]), web3.eth.abi.encodeParameter('uint256', proof.pi_c[1])]
-            };
-            let number = parseInt(proof.publicSignals[1]);
+            // let input = {
+            //     "zero": 0,
+            //     "digits": symbols,
+            //     "salt": parseInt(nonce),
+            //     "hash": window.signalHash(symbols, nonce)
+            // };
+            // const proof = await window.witness(input);
+            // let newVar = {
+            //     pi_a: [web3.eth.abi.encodeParameter('uint256', proof.pi_a[0]), web3.eth.abi.encodeParameter('uint256', proof.pi_a[1])],
+            //     pi_b: [[
+            //         web3.eth.abi.encodeParameter('uint256', proof.pi_b[0][0]), web3.eth.abi.encodeParameter('uint256', proof.pi_b[0][1])
+            //     ], [
+            //         web3.eth.abi.encodeParameter('uint256', proof.pi_b[1][0]), web3.eth.abi.encodeParameter('uint256', proof.pi_b[1][1])
+            //     ]],
+            //     pi_c: [web3.eth.abi.encodeParameter('uint256', proof.pi_c[0]), web3.eth.abi.encodeParameter('uint256', proof.pi_c[1])]
+            // };
+            // let number = parseInt(proof.publicSignals[1]);
             const weiValue = web3.utils.toWei(bet.toString(), 'ether');
-            await myContract.methods.createGame(bet, 8, guessNumber, proof.publicSignals[0]).send({from: accounts[0], value: weiValue});
+            await myContract.methods.newGame(bet.toString(), 8, guessNumber, window.signalHash(symbols, nonce)).send({from: accounts[0], value: weiValue});
         })();
         event.preventDefault();
     }, false);
