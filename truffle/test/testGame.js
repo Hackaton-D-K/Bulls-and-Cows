@@ -130,23 +130,23 @@ contract("Game", (accounts) => {
           2,
           [
             [
-              "0x035e6b39138cda379ca476ad4b1dcb31dd627c6449272312169d4a89569e9739", 
-              "0x2d7cede4736dc181bb35f3a39aeb7ede2e774dd131258133dccdde7a9ea61f87"
+              "0x1895650c11368fef26a7e969f15be3fd6dfad6d6f103352562997877cc364d74", 
+              "0x0db6d6adad28fd48512eb6428447296d05b54a87efdd0bddbc8aaa0d7149e3e8"
             ],
             [
               [
                 // TODO just remove last digit to chit: player can't chalange with invalid opcode error
-                "0x1899de587d0a33ce7ad2eeb098349108099020dda2e9d5e676149dbd28a7ae88", 
-                "0x09f163da05b1f3c03df33d27a9f76d2b2657a68d629fe7645efd3a3f4c237f8e"
+                "0x07d749369a64dcc880280a33f059bdcbff535b42d1a3ca767fc29570cc92ef3f", 
+                "0x2a81ae871c34b4ec66d4b2b22092ae00f18b7a281fefd0c7667d1368df0d55e0"
               ],
               [
-                "0x29a13feb6e63402c11a64640b90e688de22a7f8a74afad564463a909b1c88f77", 
-                "0x077a9081e1363b4b9f95e83e1b9139a4386b65a4488fb45cba2ca00eb316d346"
+                "0x22ad77a8bce0c2b013ee0ab301b2b06958302fcb0b37ee59cc1d508553a10b47", 
+                "0x0619a1044ad70e18fb0cbc2351e02cd962c3b9f85766c62bf973ce8d539f8629"
               ]
             ],
             [
-              "0x0f57a43b658c011147df55427d438b1833fec852d22473772362228a21e5ea93", 
-              "0x211e296868cb179397ffc2d7e6afe24c4f52f3e07df8681f633ff769f69fe7c3"
+              "0x0ffdbd2cee7d606a33f3ea5e94cd89a6f8fcf3a1e6ea81a07cc26fb9a2a79ccd", 
+              "0x2c53efb5884bbd486c0deca9a18411751b69e8dd218c6096d1f511f18b96bff4"
             ]
           ],
           {
