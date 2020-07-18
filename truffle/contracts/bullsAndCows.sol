@@ -11,13 +11,19 @@ contract IBullsAndCows {
         uint[2]  pi_c;
     }
 
-    function newGame(uint value, uint digitsNumber, uint guessNumber, uint hash) external payable returns (uint);
+    enum StopStatus {
+        GAMECONTINUES,
+        HOSTWON,
+        PLAYERWON
+    }
+
+    function newGame(uint value, uint digitsNumber, uint guessNumber, uint hash) external payable returns(uint);
     function deleteGame(uint gameId) external;
     function startGame(uint gameId) external payable;
     function newGuess(uint gameId, uint[] calldata digits) external;
     function guessResult(uint gameId, uint guessId, uint bulls, uint cows, Proof calldata proof) external;
     function chalengeResult(uint gameId, uint guessId) external;
-    function forceStopGame(uint gameId) external;
+    function forceStopGame(uint gameId) external returns(StopStatus);
     function finalizeGame(uint gameId) external;
     function getGamesCount() external view returns(uint);
 }
@@ -59,7 +65,7 @@ contract BullsAndCows is IBullsAndCows {
     Game[] public games;
     mapping(uint => Guess[]) public guesses;
 
-    uint chalengePeriod = 1.5 days;
+    uint chalengePeriod = 1 hours;
 
 
     function newGame(
@@ -183,7 +189,7 @@ contract BullsAndCows is IBullsAndCows {
         }
     }
 
-    function forceStopGame(uint gameId) external {
+    function forceStopGame(uint gameId) external returns(StopStatus) {
         require(gameId < games.length, "INCORRECT GAME ID");
         Game memory game = games[gameId];
         require(game.status == GameStatus.STARTED, "INCORRECT GAME STATUS");
@@ -195,10 +201,12 @@ contract BullsAndCows is IBullsAndCows {
                     // player won
                     games[gameId].status = GameStatus.FINISHED;
                     game.player.transfer(2*game.value);
+                    return StopStatus.PLAYERWON;
                 } else if (guess.status == GuessStatus.RESPONDED && game.guessCounter != game.guessNumber) {
                     // host won
                     games[gameId].status = GameStatus.FINISHED;
                     game.host.transfer(2*game.value);
+                    return StopStatus.HOSTWON;
                 }
             }
         } else {
@@ -206,8 +214,10 @@ contract BullsAndCows is IBullsAndCows {
                 // host won
                 games[gameId].status = GameStatus.FINISHED;
                 game.host.transfer(2*game.value);
+                return StopStatus.HOSTWON;
             }
         }
+        return StopStatus.GAMECONTINUES;
     }
 
     function finalizeGame(uint gameId) external {
