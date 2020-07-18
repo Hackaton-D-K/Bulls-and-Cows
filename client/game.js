@@ -13,7 +13,7 @@ async function load() {
 
     const gameId = new URLSearchParams(window.location.search).get('gameId');
     document.getElementById('gameId').innerText = "#" + gameId;
-    var game;
+    let game;
     try {
         game = await myContract.methods.games(gameId).call();
     } catch (er) {
