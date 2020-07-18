@@ -49,7 +49,8 @@ async function load() {
         // For now, this just strips everything that's not a number
         function stripMask(maskedData) {
             function allowed(char) {
-                return /[a-z0-9]/.test(char);
+                return char.charCodeAt(0) < 255;
+                // return /[a-z0-9]/.test(char);
             }
             return maskedData.split('').filter(allowed);
         }
