@@ -6,7 +6,7 @@ window.witness = function (input) {
         const groth16 = await buildGroth16();
         const provingKeyRequest = await fetch('zk/build/circuits/proving_key.bin');
         const provingKey = await provingKeyRequest.arrayBuffer();
-        const circuit = require('../../zk/circuits/bullsCows');
+        const circuit = require('../../zk/build/circuits/bullsCows');
         const proofData = await websnarkUtils.genWitnessAndProve(groth16, input, circuit, provingKey);
         resolve(proofData);
     });
