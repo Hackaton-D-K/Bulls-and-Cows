@@ -18,13 +18,8 @@ async function load() {
         if (game.status != 0) {
             continue;
         }
-        games.innerHTML += `<tr><td>${i}</td><td>${game.guessNumber}</td><td>${game.guessCounter}</td><td>${game.value} ETH</td><td>${game.host}</td><td><button onclick="startGame(${i}); return false;">Start Game</button></td></tr>`;
+        games.innerHTML += `<tr><td>${i}</td><td>${game.guessNumber}</td><td>${game.guessCounter}</td><td>${game.value} ETH</td><td>${game.host}</td><td><a href="game.hrml?gameId=${i}">Start Game</a></td></tr>`;
     }
-}
-
-async function startGame(gameId) {
-    // await myContract.methods.startGame(gameId).call();
-    window.location = 'game.html?gameId=' + gameId;
 }
 
 async function verifyProofByIndex(address, index) {

@@ -24,3 +24,8 @@ async function load() {
     document.getElementById('bet').innerText = game.value;
     document.getElementById('guesses').innerText = game.guessNumber;
 }
+
+async function startGame(gameId, bet) {
+    const weiValue = web3.utils.toWei(bet.toString(), 'ether');
+    await myContract.methods.startGame(gameId).send({from: accounts[0], value: weiValue});
+}
