@@ -38,8 +38,8 @@ async function load() {
     }, false);
 }
 
-async function verifyGuess() {
-    document.getElementById('new-guess').classList.remove('hidden');
+async function makeGuess() {
+    document.getElementById('new-guess-form').classList.remove('hidden');
     Array.prototype.forEach.call(document.body.querySelectorAll("*[data-mask]"), applyDataMask);
     document.getElementById('new-guess-form').addEventListener('submit', (event) => {
         (async () => {
@@ -49,16 +49,20 @@ async function verifyGuess() {
             }
             await myContract.methods.newGuess(gameId, symbols).call();
             document.getElementById('new-guess-form').classList.add('hidden');
-
+            document.getElementById('new-guess').innerHTML += '<p>Guess is accepted</p>';
         })();
         event.preventDefault();
     }, false);
 }
 
 async function forceStop() {
-    try {
-        await myContract.methods.forceStopGame(gameId).call();
-    } catch (e) {
-        document.getElementById('game-in-progress').innerHTML += '<p class="error">You\'ve tried to force stop the game, but we haven\'t reason fot it.</p>';
+    const status = await myContract.methods.forceStopGame(gameId).call();
+    const progress = document.getElementById('game-in-progress');
+    if (status == 0) {
+        progress.innerHTML += '<p class="error">You\'ve tried to force stop the game, but we haven\'t reason fot it.</p>';
+    } else if (status == 1) {
+        progress.innerHTML += '<p>Host win.</p>';
+    } else if (status == 2) {
+        progress.innerHTML += '<p>Player win.</p>';
     }
 }
