@@ -125,7 +125,7 @@ async function verifyProof(guessId) {
 }
 
 async function forceStop() {
-    const status = await myContract.methods.forceStopGame(gameId).call();
+    const status = await myContract.methods.forceStopGame(gameId).send({from: accounts[0]});
     const progress = document.getElementById('game-in-progress');
     if (status == 0) {
         progress.innerHTML += '<p class="error">You\'ve tried to force stop the game, but we haven\'t reason fot it.</p>';
