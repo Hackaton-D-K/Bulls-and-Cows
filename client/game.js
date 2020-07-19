@@ -6,7 +6,7 @@ async function load() {
         window.accounts = await window.ethereum.enable();
         window.myContract = new window.web3.eth.Contract(contractData.abi, contractData.address);
     } else {
-        return document.getElementById("content").innerHTML = '<h1>Non-Ethereum browser detected. You should consider trying MetaMask!</h1>'
+        return document.getElementById("content").innerHTML = '<h1 class="error">Non-Ethereum browser detected. You should consider trying MetaMask!</h1>'
     }
 
     document.getElementById('loading').innerText = '';
@@ -17,7 +17,7 @@ async function load() {
     try {
         game = await myContract.methods.games(gameId).call();
     } catch (er) {
-        document.getElementById('content').innerHTML = `<h1>Game #${gameId} doesn't exist</h1>`;
+        document.getElementById('content').innerHTML = `<h1 class="error">Game #${gameId} doesn't exist</h1>`;
         throw new Error(er);
     }
     document.getElementById('host').innerText = game.host;
