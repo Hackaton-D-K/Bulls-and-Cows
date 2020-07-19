@@ -43,7 +43,7 @@ async function load() {
             } else if (guess.status == 0 && accounts[0].toLocaleLowerCase() === game.host.toLocaleLowerCase()) {
                 verify = `<a href="#" onclick="verifyGuess(${i});return false;">Verify guess</a>`;
             }
-            guessesList += `<tr><td>Guess ${i}</td><td>${symbols}</td><td>${bulls}</td><td>${cows}</td><td>${verify}</td></tr>`;
+            guessesList += `<tr><td>Guess ${i}</td><td>${symbols}</td><td>${bulls}</td><td>${cows}</td><td><span id="verify-guess-${i}">${verify}</span></td></tr>`;
         }
         document.getElementById('game-in-progress').innerHTML = `
             <p>The game in progress. You can ${makeNewGuessBlock}<a href="#verify-guess" id="verify-guess-link" onclick="verifyGuess();return false;">verify a guess</a> or <a href="#" id="force-stop-link" onclick="forceStop();return false;">force stop the game</a> if the opponent didn't answer.</p>
@@ -81,10 +81,6 @@ async function makeGuess() {
 
 async function verifyGuess(guessId) {
     const guess = await myContract.methods.getGuess(gameId, guessId).call();
-    console.log(guess);
-    for (let i = 0; i < 8; i++) {
-        document.getElementById('symbol' + i + '-guess').value = String.fromCharCode(guess.digits[i]);
-    }
     document.getElementById('verify-guess-form').classList.remove('hidden');
     document.getElementById('new-guess-form').classList.add('hidden');
     Array.prototype.forEach.call(document.body.querySelectorAll("*[data-mask]"), applyDataMask);
@@ -93,16 +89,13 @@ async function verifyGuess(guessId) {
             const solution = new Array(8);
             for (let i = 0; i < 8; i++) {
                 solution[i] = parseInt(document.getElementById('symbol' + i + '-verify').value.charCodeAt(0));
-                document.getElementById('symbol' + i + '-guess').value = String.fromCharCode(guess.digits[i]);
             }
-            // const bulls = parseInt(document.getElementById('bulls').value);
-            // const cows = parseInt(document.getElementById('cows').value);
             const nonce = document.getElementById('nonce').value;
             let input = {
                 "zero": 0,
                 "digits": solution,
                 "salt": parseInt(nonce),
-                "hash": window.signalHash(solution, nonce),
+                "hash": window.game.hash,
                 "guess": guess.digits
             };
             const proof = await window.witness(input);
@@ -123,6 +116,14 @@ async function verifyGuess(guessId) {
     }, false);
 }
 
+async function verifyProof(guessId) {
+    const guess = await myContract.methods.getGuess(gameId, guessId).call();
+    let parameters = [
+        guess.bulls, guess.cows, window.game.hash, guess.digits[0], guess.digits[1], guess.digits[2], guess.digits[3], guess.digits[4], guess.digits[5], guess.digits[6], guess.digits[7]
+    ];
+    verify(window.verificationKey, parameters, guess.proof, document.getElementById(`verify-guess-${guessId}`));
+}
+
 async function forceStop() {
     const status = await myContract.methods.forceStopGame(gameId).call();
     const progress = document.getElementById('game-in-progress');
@@ -133,4 +134,17 @@ async function forceStop() {
     } else if (status == 2) {
         progress.innerHTML += '<p>Player win.</p>';
     }
+}
+
+function verify(verificationKey, publicSignals, proof, block) {
+    return new Promise((resolve) => {
+        const start = new Date().getTime();
+        block.innerHTML = "processing....";
+        window.groth16Verify(verificationKey, publicSignals, proof).then((res) => {
+            const end = new Date().getTime();
+            const time = end - start;
+            // document.getElementById("time").innerHTML = `Time to compute: ${time}ms`;
+            block.innerHTML = (res === true) ? '<span class="good">GOOD</span>' : '<span class="failed">Failed</span>';
+        });
+    });
 }
