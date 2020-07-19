@@ -45,7 +45,7 @@ async function load() {
             }
             guessesList += `<tr><td>Guess ${i}</td><td>${symbols}</td><td>${bulls}</td><td>${cows}</td><td><span id="verify-guess-${i}">${verify}</span></td></tr>`;
         }
-        document.getElementById('game-in-progress').innerHTML = `
+        document.getElementById('guess-list').innerHTML = `
             <p>The game in progress. You can ${makeNewGuessBlock}<a href="#verify-guess" id="verify-guess-link" onclick="verifyGuess();return false;">verify a guess</a> or <a href="#" id="force-stop-link" onclick="forceStop();return false;">force stop the game</a> if the opponent didn't answer.</p>
             <table>${guessesList}</table>`;
         document.getElementById('game-in-progress').classList.remove('hidden');
@@ -121,7 +121,7 @@ async function verifyProof(guessId) {
     let parameters = [
         guess.bulls, guess.cows, window.game.hash, guess.digits[0], guess.digits[1], guess.digits[2], guess.digits[3], guess.digits[4], guess.digits[5], guess.digits[6], guess.digits[7]
     ];
-    verify(window.verificationKey, parameters, guess.proof, document.getElementById(`verify-guess-${guessId}`));
+    verify(window.verificationKey, parameters, guess.proof, guessId);
 }
 
 async function forceStop() {
@@ -136,15 +136,18 @@ async function forceStop() {
     }
 }
 
-function verify(verificationKey, publicSignals, proof, block) {
+function verify(verificationKey, publicSignals, proof, guessId) {
     return new Promise((resolve) => {
-        const start = new Date().getTime();
-        block.innerHTML = "processing....";
         window.groth16Verify(verificationKey, publicSignals, proof).then((res) => {
-            const end = new Date().getTime();
-            const time = end - start;
-            // document.getElementById("time").innerHTML = `Time to compute: ${time}ms`;
-            block.innerHTML = (res === true) ? '<span class="good">GOOD</span>' : '<span class="failed">Failed</span>';
+            document.getElementById(`verify-guess-${guessId}`).innerHTML = (res === true) ? '<span class="good">GOOD</span>' : `<span class="failed">Failed.</span> <a href="#" onclick="challengeResult(${guessId});return false;">Challenge result</a>`;
         });
     });
+}
+
+async function challengeResult(guessId) {
+    await myContract.methods.chalengeResult(window.gameId, guessId).send({from: accounts[0]});
+}
+
+async function finalizeGame() {
+    await myContract.methods.finalizeGame(gameId).send({from: accounts[0]});
 }
