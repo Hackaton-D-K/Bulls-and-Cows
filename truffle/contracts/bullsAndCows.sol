@@ -4,7 +4,8 @@ pragma experimental ABIEncoderV2;
 import "./verifier.sol";
 
 
-contract IBullsAndCows {
+contract BullsAndCows {
+
     struct Proof {
         uint[2]  pi_a;
         uint[2][2]  pi_b;
@@ -16,19 +17,6 @@ contract IBullsAndCows {
         HOSTWON,
         PLAYERWON
     }
-
-    function newGame(uint value, uint digitsNumber, uint guessNumber, uint hash) external payable returns(uint);
-    function deleteGame(uint gameId) external;
-    function startGame(uint gameId) external payable;
-    function newGuess(uint gameId, uint[] calldata digits) external;
-    function guessResult(uint gameId, uint guessId, uint bulls, uint cows, Proof calldata proof) external;
-    function chalengeResult(uint gameId, uint guessId) external;
-    function forceStopGame(uint gameId) external returns(StopStatus);
-    function finalizeGame(uint gameId) external;
-    function getGamesCount() external view returns(uint);
-}
-
-contract BullsAndCows is IBullsAndCows {
 
     enum GameStatus {
         CREATED,
@@ -63,7 +51,7 @@ contract BullsAndCows is IBullsAndCows {
     }
 
     Game[] public games;
-    mapping(uint => Guess[]) public guesses;
+    mapping(uint => Guess[]) internal guesses;
 
     uint chalengePeriod = 1 hours;
 
@@ -250,5 +238,9 @@ contract BullsAndCows is IBullsAndCows {
 
     function getGamesCount() external view returns(uint) {
         return games.length;
+    }
+
+    function getGuess(uint gameId, uint guessId) external view returns(Guess memory) {
+        return guesses[gameId][guessId];
     }
 }

@@ -68,6 +68,10 @@ contract("Game", (accounts) => {
           }
         );
       });
+      it("should be able to get guess", async () => {
+        let result = await Game.getGuess(1, 0);
+        expect(result[0][0]).to.be.equal('6');
+      });
       it("should be able to respond guess", async () => {
         await Game.guessResult(
           1,
