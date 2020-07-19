@@ -68,6 +68,10 @@ contract("Game", (accounts) => {
           }
         );
       });
+      it("should be able to get guess", async () => {
+        let result = await Game.getGuess(1, 0);
+        expect(result[0][0]).to.be.equal('6');
+      });
       it("should be able to respond guess", async () => {
         await Game.guessResult(
           1,
@@ -173,6 +177,55 @@ contract("Game", (accounts) => {
         );
         expect(parseInt(await web3.eth.getBalance(host), 10))
           .to.be.equal(hostOldBalance + 2*10000000000);
+      });
+    });
+
+    describe("Force stop game - player wins", () => {
+      it("should be able to create game", async () => {
+        await Game.newGame(
+          10000000000, 
+          8, 
+          1, 
+          "12048674544441852656868311305490442987772597802062623141864854638649259028048",
+          {
+            from: host,
+            value: 10000000000
+          }
+        );
+      });
+      it("should be able to start game", async () => {
+        await Game.startGame(
+          3, 
+          {
+            from: player,
+            value: 10000000000
+          }
+        );
+      });
+      it("should be able to guess", async () => {
+        await Game.newGuess(
+          3, 
+          [6,6,6,6,6,1,6,6],
+          {
+            from: player
+          }
+        );
+      });
+      it("should be able to force stop game", async () => {
+        function timeout(ms) {
+          return new Promise(resolve => setTimeout(resolve, ms));
+        }
+        await timeout(5000);
+
+        const playerOldBalance = parseInt(await web3.eth.getBalance(player), 10);
+
+        let result = await Game.forceStopGame(3);
+        
+        result = await Game.games(3);
+        expect(parseInt(result['status'], 10)).to.be.equal(2);
+
+        expect(parseInt(await web3.eth.getBalance(player), 10))
+          .to.be.equal(playerOldBalance + 2*10000000000);
       });
     });
   });
