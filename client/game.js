@@ -22,9 +22,12 @@ async function load() {
     }
     document.getElementById('host').innerText = game.host;
     document.getElementById('bet').innerText = web3.utils.fromWei(game.value, 'ether');
-    document.getElementById('guesses').innerText = game.guessNumber;
+    const remainingGuesses = parseInt(game.guessNumber) - parseInt(game.guessCounter);
+    document.getElementById('guesses').innerText = remainingGuesses;
     if (game.status == 1) {
         document.getElementById('yourbet').classList.add('hidden');
+        const makeNewGuessBlock = remainingGuesses > 0 ? `<a href="#" id="new-guess-link" onclick="makeGuess();return false;">make a new guess</a>, ` : '';
+        document.getElementById('game-in-progress').innerHTML = `<p>The game in progress. You can ${makeNewGuessBlock}<a href="#" id="verify-guess-link">verify a guess</a> or <a href="#" id="force-stop-link" onclick="forceStop();return false;">force stop the game</a> if the opponent didn't answer.</p>`;
         document.getElementById('game-in-progress').classList.remove('hidden');
     }
 
@@ -47,7 +50,7 @@ async function makeGuess() {
             for (let i = 0; i < 8; i++) {
                 symbols[i] = parseInt(document.getElementById('symbol' + i).value.charCodeAt(0));
             }
-            await myContract.methods.newGuess(gameId, symbols).call();
+            await myContract.methods.newGuess(gameId, symbols).send({from: accounts[0]});
             document.getElementById('new-guess-form').classList.add('hidden');
             document.getElementById('new-guess').innerHTML += '<p>Guess is accepted</p>';
         })();

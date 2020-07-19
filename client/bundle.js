@@ -20730,7 +20730,8 @@ window.witness = function (input) {
         symbol7.writeInt8(symbols[7]);
         let nonceB = Buffer.alloc(24);
         nonceB.writeInt8(nonce);
-        return stringifyBigInts(pedersenHash(Buffer.concat([symbol0, amountB, nonceB])));
+        return stringifyBigInts(pedersenHash(
+            Buffer.concat([symbol0, symbol1, symbol2, symbol3, symbol4, symbol5, symbol6, symbol7, nonceB])));
     };
 
     window.applyDataMask = function (field) {
@@ -20742,12 +20743,13 @@ window.witness = function (input) {
                 return char.charCodeAt(0) < 255;
                 // return /[a-z0-9]/.test(char);
             }
+
             return maskedData.split('').filter(allowed);
         }
 
         // Replace `_` characters with characters from `data`
         function applyMask(data) {
-            return mask.map(function(char) {
+            return mask.map(function (char) {
                 if (char != '_') return char;
                 if (data.length == 0) return char;
                 return data.shift();

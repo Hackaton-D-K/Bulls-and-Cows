@@ -38,8 +38,13 @@ async function load() {
             // };
             // let number = parseInt(proof.publicSignals[1]);
             const weiValue = web3.utils.toWei(bet.toString(), 'ether');
-            await myContract.methods.newGame(weiValue, 8, guessNumber, window.signalHash(symbols, nonce))
-                .send({from: accounts[0], value: weiValue});
+            try {
+                await myContract.methods.newGame(weiValue, 8, guessNumber, window.signalHash(symbols, nonce))
+                    .send({from: accounts[0], value: weiValue});
+            } catch (e) {
+                document.getElementById('create').innerHTML += `<p class="error">${e.message}</p>`;
+                throw new Error(e);
+            }
         })();
         event.preventDefault();
     }, false);
