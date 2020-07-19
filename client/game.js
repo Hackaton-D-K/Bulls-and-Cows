@@ -26,7 +26,28 @@ async function load() {
     if (game.status == 1) {
         document.getElementById('yourbet').classList.add('hidden');
         const makeNewGuessBlock = remainingGuesses > 0 ? `<a href="#" id="new-guess-link" onclick="makeGuess();return false;">make a new guess</a>, ` : '';
-        document.getElementById('game-in-progress').innerHTML = `<p>The game in progress. You can ${makeNewGuessBlock}<a href="#" id="verify-guess-link" onclick="verifyGuess();return false;">verify a guess</a> or <a href="#" id="force-stop-link" onclick="forceStop();return false;">force stop the game</a> if the opponent didn't answer.</p>`;
+        let guessesList = '';
+        for (let i = 0; i < window.game.guessCounter; i++) {
+            const guess = await myContract.methods.getGuess(gameId, i).call();
+            let symbols = '';
+            for (let j = 0; j < guess.digits.length; j++) {
+                symbols += `<input class="symbol" type="text" disabled value="${String.fromCharCode(guess.digits[j])}"/>`;
+            }
+            let bulls = '';
+            let cows = '';
+            let verify = '';
+            if (guess.status == 1) {
+                bulls = `<img class="b-c-image" src="client/bull.svg" alt="bulls">: ${guess.bulls}`;
+                cows = `<img class="b-c-image" src="client/cow.svg" alt="cows">: ${guess.cows}`;
+                verify = `<a href="#" onclick="verifyProof(${i});return false;">Verify proof</a>`;
+            } else if (guess.status == 0 && accounts[0].toLocaleLowerCase() === game.host.toLocaleLowerCase()) {
+                verify = `<a href="#" onclick="verifyGuess(${i});return false;">Verify guess</a>`;
+            }
+            guessesList += `<tr><td>Guess ${i}</td><td>${symbols}</td><td>${bulls}</td><td>${cows}</td><td>${verify}</td></tr>`;
+        }
+        document.getElementById('game-in-progress').innerHTML = `
+            <p>The game in progress. You can ${makeNewGuessBlock}<a href="#verify-guess" id="verify-guess-link" onclick="verifyGuess();return false;">verify a guess</a> or <a href="#" id="force-stop-link" onclick="forceStop();return false;">force stop the game</a> if the opponent didn't answer.</p>
+            <table>${guessesList}</table>`;
         document.getElementById('game-in-progress').classList.remove('hidden');
     }
 
@@ -42,6 +63,7 @@ async function load() {
 
 async function makeGuess() {
     document.getElementById('new-guess-form').classList.remove('hidden');
+    document.getElementById('verify-guess-form').classList.add('hidden');
     Array.prototype.forEach.call(document.body.querySelectorAll("*[data-mask]"), applyDataMask);
     document.getElementById('new-guess-form').addEventListener('submit', (event) => {
         (async () => {
@@ -57,21 +79,45 @@ async function makeGuess() {
     }, false);
 }
 
-async function verifyGuess() {
-    document.getElementById('verify-guess-form').classList.remove('hidden');
-    for (let i = 0; i < window.game.guessCounter; i++) {
-        const guess = await myContract.methods.guesses(gameId, i).call();
-        console.log(gues);
+async function verifyGuess(guessId) {
+    const guess = await myContract.methods.getGuess(gameId, guessId).call();
+    console.log(guess);
+    for (let i = 0; i < 8; i++) {
+        document.getElementById('symbol' + i + '-guess').value = String.fromCharCode(guess.digits[i]);
     }
+    document.getElementById('verify-guess-form').classList.remove('hidden');
+    document.getElementById('new-guess-form').classList.add('hidden');
+    Array.prototype.forEach.call(document.body.querySelectorAll("*[data-mask]"), applyDataMask);
     document.getElementById('verify-guess-form').addEventListener('submit', (event) => {
         (async () => {
-            const symbols = new Array(8);
+            const solution = new Array(8);
             for (let i = 0; i < 8; i++) {
-                symbols[i] = parseInt(document.getElementById('symbol' + i).value.charCodeAt(0));
+                solution[i] = parseInt(document.getElementById('symbol' + i + '-verify').value.charCodeAt(0));
+                document.getElementById('symbol' + i + '-guess').value = String.fromCharCode(guess.digits[i]);
             }
-            await myContract.methods.newGuess(gameId, symbols).send({from: accounts[0]});
-            document.getElementById('new-guess-form').classList.add('hidden');
-            document.getElementById('new-guess').innerHTML += '<p>Guess is accepted</p>';
+            // const bulls = parseInt(document.getElementById('bulls').value);
+            // const cows = parseInt(document.getElementById('cows').value);
+            const nonce = document.getElementById('nonce').value;
+            let input = {
+                "zero": 0,
+                "digits": solution,
+                "salt": parseInt(nonce),
+                "hash": window.signalHash(solution, nonce),
+                "guess": guess.digits
+            };
+            const proof = await window.witness(input);
+            let newVar = {
+                pi_a: [web3.eth.abi.encodeParameter('uint256', proof.pi_a[0]), web3.eth.abi.encodeParameter('uint256', proof.pi_a[1])],
+                pi_b: [[
+                    web3.eth.abi.encodeParameter('uint256', proof.pi_b[0][0]), web3.eth.abi.encodeParameter('uint256', proof.pi_b[0][1])
+                ], [
+                    web3.eth.abi.encodeParameter('uint256', proof.pi_b[1][0]), web3.eth.abi.encodeParameter('uint256', proof.pi_b[1][1])
+                ]],
+                pi_c: [web3.eth.abi.encodeParameter('uint256', proof.pi_c[0]), web3.eth.abi.encodeParameter('uint256', proof.pi_c[1])]
+            };
+            const bulls = parseInt(proof.publicSignals[0]);
+            const cows = parseInt(proof.publicSignals[1]);
+            await myContract.methods.guessResult(gameId, guessId, bulls, cows, newVar).send({from: accounts[0]});
         })();
         event.preventDefault();
     }, false);

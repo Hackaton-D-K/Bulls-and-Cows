@@ -53,6 +53,20 @@ input {
     font-size: 1.5em;
 }
 
+.button {
+    background: #00adff;
+    border: 0;
+    margin: 1em;
+    border-radius: .3em;
+    color: #fff;
+    padding: .5em;
+    cursor: pointer;
+}
+
+.b-c-image {
+    width: 2em;
+}
+
 .symbol {
     width: 1em;
 }

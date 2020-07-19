@@ -4,7 +4,7 @@
 })(window, document);
 
 window.contractData = {
-    address: '0x59f88fca23b63507eb685eb1c8b846479381c189',
+    address: '0x017134b2aba2e6eaf964d307a7c143c69e48aac4',
     abi: [
         {
             "constant": true,
@@ -60,69 +60,6 @@ window.contractData = {
                 {
                     "internalType": "uint256",
                     "name": "startTime",
-                    "type": "uint256"
-                }
-            ],
-            "payable": false,
-            "stateMutability": "view",
-            "type": "function"
-        },
-        {
-            "constant": true,
-            "inputs": [
-                {
-                    "internalType": "uint256",
-                    "name": "",
-                    "type": "uint256"
-                },
-                {
-                    "internalType": "uint256",
-                    "name": "",
-                    "type": "uint256"
-                }
-            ],
-            "name": "guesses",
-            "outputs": [
-                {
-                    "internalType": "uint256",
-                    "name": "bulls",
-                    "type": "uint256"
-                },
-                {
-                    "internalType": "uint256",
-                    "name": "cows",
-                    "type": "uint256"
-                },
-                {
-                    "components": [
-                        {
-                            "internalType": "uint256[2]",
-                            "name": "pi_a",
-                            "type": "uint256[2]"
-                        },
-                        {
-                            "internalType": "uint256[2][2]",
-                            "name": "pi_b",
-                            "type": "uint256[2][2]"
-                        },
-                        {
-                            "internalType": "uint256[2]",
-                            "name": "pi_c",
-                            "type": "uint256[2]"
-                        }
-                    ],
-                    "internalType": "struct IBullsAndCows.Proof",
-                    "name": "proof",
-                    "type": "tuple"
-                },
-                {
-                    "internalType": "enum BullsAndCows.GuessStatus",
-                    "name": "status",
-                    "type": "uint8"
-                },
-                {
-                    "internalType": "uint256",
-                    "name": "time",
                     "type": "uint256"
                 }
             ],
@@ -257,7 +194,7 @@ window.contractData = {
                             "type": "uint256[2]"
                         }
                     ],
-                    "internalType": "struct IBullsAndCows.Proof",
+                    "internalType": "struct BullsAndCows.Proof",
                     "name": "proof",
                     "type": "tuple"
                 }
@@ -300,7 +237,7 @@ window.contractData = {
             "name": "forceStopGame",
             "outputs": [
                 {
-                    "internalType": "enum IBullsAndCows.StopStatus",
+                    "internalType": "enum BullsAndCows.StopStatus",
                     "name": "",
                     "type": "uint8"
                 }
@@ -333,6 +270,81 @@ window.contractData = {
                     "internalType": "uint256",
                     "name": "",
                     "type": "uint256"
+                }
+            ],
+            "payable": false,
+            "stateMutability": "view",
+            "type": "function"
+        },
+        {
+            "constant": true,
+            "inputs": [
+                {
+                    "internalType": "uint256",
+                    "name": "gameId",
+                    "type": "uint256"
+                },
+                {
+                    "internalType": "uint256",
+                    "name": "guessId",
+                    "type": "uint256"
+                }
+            ],
+            "name": "getGuess",
+            "outputs": [
+                {
+                    "components": [
+                        {
+                            "internalType": "uint256[]",
+                            "name": "digits",
+                            "type": "uint256[]"
+                        },
+                        {
+                            "internalType": "uint256",
+                            "name": "bulls",
+                            "type": "uint256"
+                        },
+                        {
+                            "internalType": "uint256",
+                            "name": "cows",
+                            "type": "uint256"
+                        },
+                        {
+                            "components": [
+                                {
+                                    "internalType": "uint256[2]",
+                                    "name": "pi_a",
+                                    "type": "uint256[2]"
+                                },
+                                {
+                                    "internalType": "uint256[2][2]",
+                                    "name": "pi_b",
+                                    "type": "uint256[2][2]"
+                                },
+                                {
+                                    "internalType": "uint256[2]",
+                                    "name": "pi_c",
+                                    "type": "uint256[2]"
+                                }
+                            ],
+                            "internalType": "struct BullsAndCows.Proof",
+                            "name": "proof",
+                            "type": "tuple"
+                        },
+                        {
+                            "internalType": "enum BullsAndCows.GuessStatus",
+                            "name": "status",
+                            "type": "uint8"
+                        },
+                        {
+                            "internalType": "uint256",
+                            "name": "time",
+                            "type": "uint256"
+                        }
+                    ],
+                    "internalType": "struct BullsAndCows.Guess",
+                    "name": "",
+                    "type": "tuple"
                 }
             ],
             "payable": false,

@@ -34,6 +34,9 @@
             </form>
         </div>
         <div id="game-in-progress" class="hidden">
+            <div id="guess-list">
+
+            </div>
         </div>
         <div id="new-guess">
             <form class="hidden" id="new-guess-form">
@@ -58,14 +61,54 @@
         </div>
         <div id="verify-guess">
             <form class="hidden" id="verify-guess-form">
+                <h2>Verify Guess</h2>
                 <div>
                     <label>
-                        Symbols
+                        Solution
+                        <input class="symbol" id="symbol0-verify" name="symbol0-verify" type="text" data-mask="_"/>
+                        <input class="symbol" id="symbol1-verify" name="symbol1-verify" type="text" data-mask="_"/>
+                        <input class="symbol" id="symbol2-verify" name="symbol2-verify" type="text" data-mask="_"/>
+                        <input class="symbol" id="symbol3-verify" name="symbol3-verify" type="text" data-mask="_"/>
+                        <input class="symbol" id="symbol4-verify" name="symbol4-verify" type="text" data-mask="_"/>
+                        <input class="symbol" id="symbol5-verify" name="symbol5-verify" type="text" data-mask="_"/>
+                        <input class="symbol" id="symbol6-verify" name="symbol6-verify" type="text" data-mask="_"/>
+                        <input class="symbol" id="symbol7-verify" name="symbol7-verify" type="text" data-mask="_"/>
+                    </label>
+                </div>
+                <div>
+                    <label>
+                        Guess
+                        <input class="symbol" id="symbol0-guess" name="symbol0-guess" type="text" disabled/>
+                        <input class="symbol" id="symbol1-guess" name="symbol1-guess" type="text" disabled/>
+                        <input class="symbol" id="symbol2-guess" name="symbol2-guess" type="text" disabled/>
+                        <input class="symbol" id="symbol3-guess" name="symbol3-guess" type="text" disabled/>
+                        <input class="symbol" id="symbol4-guess" name="symbol4-guess" type="text" disabled/>
+                        <input class="symbol" id="symbol5-guess" name="symbol5-guess" type="text" disabled/>
+                        <input class="symbol" id="symbol6-guess" name="symbol6-guess" type="text" disabled/>
+                        <input class="symbol" id="symbol7-guess" name="symbol7-guess" type="text" disabled/>
+                    </label>
+                </div>
+<!--                <div>-->
+<!--                    <label>-->
+<!--                        Bulls-->
+<!--                        <input id="bulls" name="bulls" type="number"/>-->
+<!--                    </label>-->
+<!--                </div>-->
+<!--                <div>-->
+<!--                    <label>-->
+<!--                        Cows-->
+<!--                        <input id="cows" name="cows" type="number"/>-->
+<!--                    </label>-->
+<!--                </div>-->
+                <div>
+                    <label>
+                        Nonce
+                        <input id="nonce" name="nonce" type="text"/>
                     </label>
                 </div>
                 <div>
                     <input class="button" type="submit" id="verify-submit" name="verify-submit"
-                           value="Make a Guess"/>
+                           value="Verify Guess"/>
                 </div>
             </form>
         </div>
