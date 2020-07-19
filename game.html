@@ -33,6 +33,35 @@
                 <input class="button" type="submit" id="bet-submit" name="bet-submit" value="Start Game"/>
             </form>
         </div>
+        <div id="game-in-progress" class="hidden">
+            <p>The game in progress. You can <a href="#" id="new-guess-link" onclick="verifyGuess();return false;">make
+                a new guess</a>, <a href="#"
+                                    id="verify-guess-link">verify
+                a guess</a> or <a href="#" id="force-stop-link" onclick="forceStop();return false;">force stop the
+                game</a> if
+                the opponent didn't answer.</p>
+        </div>
+        <div class="hidden" id="new-guess">
+            <form id="new-guess-form">
+                <div>
+                    <label>
+                        Symbols (all ASCII characters are supported)
+                        <input class="symbol" id="symbol0" name="symbol0" type="text" data-mask="_"/>
+                        <input class="symbol" id="symbol1" name="symbol1" type="text" data-mask="_"/>
+                        <input class="symbol" id="symbol2" name="symbol2" type="text" data-mask="_"/>
+                        <input class="symbol" id="symbol3" name="symbol3" type="text" data-mask="_"/>
+                        <input class="symbol" id="symbol4" name="symbol4" type="text" data-mask="_"/>
+                        <input class="symbol" id="symbol5" name="symbol5" type="text" data-mask="_"/>
+                        <input class="symbol" id="symbol6" name="symbol6" type="text" data-mask="_"/>
+                        <input class="symbol" id="symbol7" name="symbol7" type="text" data-mask="_"/>
+                    </label>
+                </div>
+                <div>
+                    <input class="button" type="submit" id="generate-submit" name="generate-submit"
+                           value="Make a Guess"/>
+                </div>
+            </form>
+        </div>
     </div>
 </div>
 

@@ -23,7 +23,7 @@ async function load() {
         } else {
             continue;
         }
-        games.innerHTML += `<tr><td>${i}</td><td>${game.guessNumber}</td><td>${game.guessCounter}</td><td>${web3.utils.fromWei(game.value, 'ether')} ETH</td><td>${game.host}</td><td>${status}</td><td><a href="game.html?gameId=${i}">Open Game</a></td></tr>`;
+        games.innerHTML += `<tr><td>#${i}</td><td>${game.guessNumber}</td><td>${game.guessCounter}</td><td>${web3.utils.fromWei(game.value, 'ether')} ETH</td><td>${game.host}</td><td>${status}</td><td><a href="game.html?gameId=${i}">Open Game</a></td></tr>`;
     }
 }
 

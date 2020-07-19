@@ -4,7 +4,7 @@
 })(window, document);
 
 window.contractData = {
-    address: '0x5dab3984a4e3497996eb6fcab8600cfb4dfde9b7',
+    address: '0x59f88fca23b63507eb685eb1c8b846479381c189',
     abi: [
         {
             "constant": true,
@@ -298,7 +298,13 @@ window.contractData = {
                 }
             ],
             "name": "forceStopGame",
-            "outputs": [],
+            "outputs": [
+                {
+                    "internalType": "enum IBullsAndCows.StopStatus",
+                    "name": "",
+                    "type": "uint8"
+                }
+            ],
             "payable": false,
             "stateMutability": "nonpayable",
             "type": "function"

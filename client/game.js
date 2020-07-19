@@ -11,7 +11,7 @@ async function load() {
 
     document.getElementById('loading').innerText = '';
 
-    const gameId = parseInt(new URLSearchParams(window.location.search).get('gameId'));
+    window.gameId = parseInt(new URLSearchParams(window.location.search).get('gameId'));
     document.getElementById('gameId').innerText = "#" + gameId;
     let game;
     try {
@@ -21,16 +21,44 @@ async function load() {
         throw new Error(er);
     }
     document.getElementById('host').innerText = game.host;
-    const bet = web3.utils.fromWei(game.value, 'ether');
-    document.getElementById('bet').innerText = bet;
+    document.getElementById('bet').innerText = web3.utils.fromWei(game.value, 'ether');
     document.getElementById('guesses').innerText = game.guessNumber;
+    if (game.status == 1) {
+        document.getElementById('yourbet').classList.add('hidden');
+        document.getElementById('game-in-progress').classList.remove('hidden');
+    }
 
     document.getElementById('bet-form').addEventListener('submit', (event) => {
         (async () => {
             await myContract.methods.startGame(gameId).send({from: accounts[0], value: game.value});
             document.getElementById('yourbet').classList.add('hidden');
+            document.getElementById('game-in-progress').classList.remove('hidden');
+        })();
+        event.preventDefault();
+    }, false);
+}
+
+async function verifyGuess() {
+    document.getElementById('new-guess').classList.remove('hidden');
+    Array.prototype.forEach.call(document.body.querySelectorAll("*[data-mask]"), applyDataMask);
+    document.getElementById('new-guess-form').addEventListener('submit', (event) => {
+        (async () => {
+            const symbols = new Array(8);
+            for (let i = 0; i < 8; i++) {
+                symbols[i] = parseInt(document.getElementById('symbol' + i).value.charCodeAt(0));
+            }
+            await myContract.methods.newGuess(gameId, symbols).call();
+            document.getElementById('new-guess-form').classList.add('hidden');
 
         })();
         event.preventDefault();
     }, false);
+}
+
+async function forceStop() {
+    try {
+        await myContract.methods.forceStopGame(gameId).call();
+    } catch (e) {
+        document.getElementById('game-in-progress').innerHTML += '<p class="error">You\'ve tried to force stop the game, but we haven\'t reason fot it.</p>';
+    }
 }
