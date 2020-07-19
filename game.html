@@ -23,7 +23,7 @@
     <h1 class="header-title"><a class="header-link" href="index.html">Bulls & Cows</a></h1>
 </header>
 <div class="content" id="content">
-    <h2>Game <span id="gameId"></span></h2>
+    <h2 class="center-text">Game <span id="gameId"></span></h2>
     <div id="loading">Loading...</div>
     <div id="game">
         <p>The game with <span id="host"></span> for <span id="bet"></span> ETH.</p>
@@ -51,7 +51,20 @@
                     </label>
                 </div>
                 <div>
-                    <input class="button" type="submit" id="generate-submit" name="generate-submit"
+                    <input class="button" type="submit" id="new-submit" name="new-submit"
+                           value="Make a Guess"/>
+                </div>
+            </form>
+        </div>
+        <div id="verify-guess">
+            <form class="hidden" id="verify-guess-form">
+                <div>
+                    <label>
+                        Symbols
+                    </label>
+                </div>
+                <div>
+                    <input class="button" type="submit" id="verify-submit" name="verify-submit"
                            value="Make a Guess"/>
                 </div>
             </form>

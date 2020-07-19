@@ -13,9 +13,8 @@ async function load() {
 
     window.gameId = parseInt(new URLSearchParams(window.location.search).get('gameId'));
     document.getElementById('gameId').innerText = "#" + gameId;
-    let game;
     try {
-        game = await myContract.methods.games(gameId).call();
+        window.game = await myContract.methods.games(gameId).call();
     } catch (er) {
         document.getElementById('content').innerHTML = `<h1 class="error">Game #${gameId} doesn't exist</h1>`;
         throw new Error(er);
@@ -27,7 +26,7 @@ async function load() {
     if (game.status == 1) {
         document.getElementById('yourbet').classList.add('hidden');
         const makeNewGuessBlock = remainingGuesses > 0 ? `<a href="#" id="new-guess-link" onclick="makeGuess();return false;">make a new guess</a>, ` : '';
-        document.getElementById('game-in-progress').innerHTML = `<p>The game in progress. You can ${makeNewGuessBlock}<a href="#" id="verify-guess-link">verify a guess</a> or <a href="#" id="force-stop-link" onclick="forceStop();return false;">force stop the game</a> if the opponent didn't answer.</p>`;
+        document.getElementById('game-in-progress').innerHTML = `<p>The game in progress. You can ${makeNewGuessBlock}<a href="#" id="verify-guess-link" onclick="verifyGuess();return false;">verify a guess</a> or <a href="#" id="force-stop-link" onclick="forceStop();return false;">force stop the game</a> if the opponent didn't answer.</p>`;
         document.getElementById('game-in-progress').classList.remove('hidden');
     }
 
@@ -45,6 +44,26 @@ async function makeGuess() {
     document.getElementById('new-guess-form').classList.remove('hidden');
     Array.prototype.forEach.call(document.body.querySelectorAll("*[data-mask]"), applyDataMask);
     document.getElementById('new-guess-form').addEventListener('submit', (event) => {
+        (async () => {
+            const symbols = new Array(8);
+            for (let i = 0; i < 8; i++) {
+                symbols[i] = parseInt(document.getElementById('symbol' + i).value.charCodeAt(0));
+            }
+            await myContract.methods.newGuess(gameId, symbols).send({from: accounts[0]});
+            document.getElementById('new-guess-form').classList.add('hidden');
+            document.getElementById('new-guess').innerHTML += '<p>Guess is accepted</p>';
+        })();
+        event.preventDefault();
+    }, false);
+}
+
+async function verifyGuess() {
+    document.getElementById('verify-guess-form').classList.remove('hidden');
+    for (let i = 0; i < window.game.guessCounter; i++) {
+        const guess = await myContract.methods.guesses(gameId, i).call();
+        console.log(gues);
+    }
+    document.getElementById('verify-guess-form').addEventListener('submit', (event) => {
         (async () => {
             const symbols = new Array(8);
             for (let i = 0; i < 8; i++) {
