@@ -98,7 +98,13 @@ async function verifyGuess(guessId) {
                 "hash": window.game.hash,
                 "guess": guess.digits
             };
-            const proof = await window.witness(input);
+            let proof;
+            try {
+                proof = await window.witness(input);
+            } catch (e) {
+                document.getElementById('verify-error').innerHTML += `<p class="error">${e}</p>`
+                throw new Error(e);
+            }
             let newVar = {
                 pi_a: [web3.eth.abi.encodeParameter('uint256', proof.pi_a[0]), web3.eth.abi.encodeParameter('uint256', proof.pi_a[1])],
                 pi_b: [[
