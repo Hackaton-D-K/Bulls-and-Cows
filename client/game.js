@@ -25,7 +25,7 @@ async function load() {
     document.getElementById('guesses').innerText = remainingGuesses;
     if (game.status == 1) {
         document.getElementById('yourbet').classList.add('hidden');
-        const makeNewGuessBlock = remainingGuesses > 0 ? `<a href="#" id="new-guess-link" onclick="makeGuess();return false;">make a new guess</a> or ` : '';
+        const makeNewGuessBlock = remainingGuesses > 0 ? `<button class="button" onclick="makeGuess();return false;">Make Guess</button>` : '';
         let guessesList = '';
         for (let i = 0; i < window.game.guessCounter; i++) {
             const guess = await myContract.methods.getGuess(gameId, i).call();
@@ -46,7 +46,9 @@ async function load() {
             guessesList += `<tr><td>Guess ${i}</td><td>${symbols}</td><td>${bulls}</td><td>${cows}</td><td><span id="verify-guess-${i}">${verify}</span></td></tr>`;
         }
         document.getElementById('guess-list').innerHTML = `
-            <p>The game in progress. You can ${makeNewGuessBlock}<a href="#" id="force-stop-link" onclick="forceStop();return false;">force stop the game</a> if the opponent didn't answer.</p>
+            ${makeNewGuessBlock}
+            <button class="button" onclick="finalizeGame();return false;">Finalize Game</button>
+            <button class="button" onclick="forceStop();return false;">Force stop the game</button>
             <table>${guessesList}</table>`;
         document.getElementById('game-in-progress').classList.remove('hidden');
     }
