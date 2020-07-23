@@ -33,16 +33,16 @@
                 <input class="button" type="submit" id="bet-submit" name="bet-submit" value="Start Game"/>
             </form>
         </div>
-        <div id="game-in-progress" class="hidden">
+        <div id="game-in-progress" class="hidden center-text">
             <div id="guess-list">
             </div>
         </div>
-        <div id="new-guess">
+        <div id="new-guess" class="center-text">
             <form class="hidden" id="new-guess-form">
                 <h2>Make a Guess</h2>
                 <div>
                     <label>
-                        Symbols (all ASCII characters are supported)
+                        <span class="label-text">Symbols (all ASCII characters are supported)</span>
                         <input class="symbol" id="symbol0" name="symbol0" type="text" data-mask="_"/>
                         <input class="symbol" id="symbol1" name="symbol1" type="text" data-mask="_"/>
                         <input class="symbol" id="symbol2" name="symbol2" type="text" data-mask="_"/>
@@ -59,13 +59,13 @@
                 </div>
             </form>
         </div>
-        <div id="verify-guess">
+        <div id="verify-guess" class="center-text">
             <form class="hidden" id="verify-guess-form">
                 <h2>Verify Guess</h2>
                 <div id="verify-error"></div>
                 <div>
                     <label>
-                        Solution
+                        <span class="label-text">Solution</span>
                         <input class="symbol" id="symbol0-verify" name="symbol0-verify" type="text" data-mask="_"/>
                         <input class="symbol" id="symbol1-verify" name="symbol1-verify" type="text" data-mask="_"/>
                         <input class="symbol" id="symbol2-verify" name="symbol2-verify" type="text" data-mask="_"/>
@@ -78,7 +78,7 @@
                 </div>
                 <div>
                     <label>
-                        Nonce
+                        <span class="label-text">Nonce</span>
                         <input id="nonce" name="nonce" type="text"/>
                     </label>
                 </div>

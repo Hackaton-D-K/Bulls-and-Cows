@@ -49,7 +49,7 @@ async function load() {
             ${makeNewGuessBlock}
             <button class="button" onclick="finalizeGame();return false;">Finalize Game</button>
             <button class="button" onclick="forceStop();return false;">Force stop the game</button>
-            <table>${guessesList}</table>`;
+            <table class="centered">${guessesList}</table>`;
         document.getElementById('game-in-progress').classList.remove('hidden');
     }
 
