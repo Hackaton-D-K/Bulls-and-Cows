@@ -1,5 +1,5 @@
 # Bulls&Cows
-Zero knowledge implementation of [Bulls and Cows](https://en.wikipedia.org/wiki/Bulls_and_Cows) game for Ethereum. This project was build for [UTONHACK 2.0](https://utonhack.devpost.com/) hackathon.
+Zero knowledge implementation of [Bulls and Cows](https://en.wikipedia.org/wiki/Bulls_and_Cows) game for Ethereum. This project was build for [UTONHACK 2.0](https://utonhack.devpost.com/) hackathon. Testnet [demo](https://hackaton-d-k.github.io/Bulls-and-Cows/index.html) page.
 <div>
 <img style="display:inline-block;" src="bull.svg" alt="BULL" width="100" height="100">
 <img style="display:inline-block;" src="cow.svg" alt="COW" width="100" height="100">
