@@ -1,8 +1,9 @@
 # Bulls&Cows
 Zero knowledge implementation of [Bulls and Cows](https://en.wikipedia.org/wiki/Bulls_and_Cows) game for Ethereum. This project was build for [UTONHACK 2.0](https://utonhack.devpost.com/) hackathon.
- 
-<img src="bull.svg" alt="BULL" width="100" height="100">
-<img src="cow.svg" alt="COW" width="100" height="100">
+<div>
+<img style="display:inline-block;" src="bull.svg" alt="BULL" width="100" height="100">
+<img style="display:inline-block;" src="cow.svg" alt="COW" width="100" height="100">
+</div>
  
 ## Game rules
 The game is usually played with 4-letter words, alternate versions of the game can be played with any number of letters. They must be real words, according to whatever language or languages you are playing the game in.
