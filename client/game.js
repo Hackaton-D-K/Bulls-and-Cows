@@ -1,5 +1,28 @@
 window.addEventListener('load', () => setTimeout(load, 1000));
 
+async function composeGuessesList() {
+    let guessesList = '';
+    for (let i = 0; i < window.game.guessCounter; i++) {
+        const guess = await myContract.methods.getGuess(gameId, i).call();
+        let symbols = '';
+        for (let j = 0; j < guess.digits.length; j++) {
+            symbols += `<input class="symbol" type="text" disabled value="${String.fromCharCode(guess.digits[j])}"/>`;
+        }
+        let bulls = '';
+        let cows = '';
+        let verify = '';
+        if (guess.status == 1) {
+            bulls = `<img class="b-c-image" src="client/bull.svg" alt="bulls">: ${guess.bulls}`;
+            cows = `<img class="b-c-image" src="client/cow.svg" alt="cows">: ${guess.cows}`;
+            verify = `<a href="#" onclick="verifyProof(${i});return false;">Verify proof</a>`;
+        } else if (guess.status == 0 && accounts[0].toLocaleLowerCase() === game.host.toLocaleLowerCase()) {
+            verify = `<a href="#" onclick="verifyGuess(${i});return false;">Verify guess</a>`;
+        }
+        guessesList += `<tr><td>Guess ${i}</td><td>${symbols}</td><td>${bulls}</td><td>${cows}</td><td><span id="verify-guess-${i}">${verify}</span></td></tr>`;
+    }
+    return guessesList;
+}
+
 async function load() {
     if (window.ethereum) {
         window.web3 = new Web3(window.ethereum);
@@ -23,33 +46,20 @@ async function load() {
     document.getElementById('bet').innerText = web3.utils.fromWei(game.value, 'ether');
     const remainingGuesses = parseInt(game.guessNumber) - parseInt(game.guessCounter);
     document.getElementById('guesses').innerText = remainingGuesses;
-    if (game.status == 1) {
+    if (game.status == 0 || game.status == 1) {
         document.getElementById('yourbet').classList.add('hidden');
         const makeNewGuessBlock = remainingGuesses > 0 ? `<button class="button" onclick="makeGuess();return false;">Make Guess</button>` : '';
-        let guessesList = '';
-        for (let i = 0; i < window.game.guessCounter; i++) {
-            const guess = await myContract.methods.getGuess(gameId, i).call();
-            let symbols = '';
-            for (let j = 0; j < guess.digits.length; j++) {
-                symbols += `<input class="symbol" type="text" disabled value="${String.fromCharCode(guess.digits[j])}"/>`;
-            }
-            let bulls = '';
-            let cows = '';
-            let verify = '';
-            if (guess.status == 1) {
-                bulls = `<img class="b-c-image" src="client/bull.svg" alt="bulls">: ${guess.bulls}`;
-                cows = `<img class="b-c-image" src="client/cow.svg" alt="cows">: ${guess.cows}`;
-                verify = `<a href="#" onclick="verifyProof(${i});return false;">Verify proof</a>`;
-            } else if (guess.status == 0 && accounts[0].toLocaleLowerCase() === game.host.toLocaleLowerCase()) {
-                verify = `<a href="#" onclick="verifyGuess(${i});return false;">Verify guess</a>`;
-            }
-            guessesList += `<tr><td>Guess ${i}</td><td>${symbols}</td><td>${bulls}</td><td>${cows}</td><td><span id="verify-guess-${i}">${verify}</span></td></tr>`;
-        }
+        let guessesList = await composeGuessesList();
         document.getElementById('guess-list').innerHTML = `
             ${makeNewGuessBlock}
             <button class="button" onclick="finalizeGame();return false;">Finalize Game</button>
             <button class="button" onclick="forceStop();return false;">Force stop the game</button>
             <table class="centered">${guessesList}</table>`;
+        document.getElementById('game-in-progress').classList.remove('hidden');
+    } else if (game.status == 2) {
+        document.getElementById('yourbet').classList.add('hidden');
+        const guessesList = await composeGuessesList();
+        document.getElementById('game-in-progress').innerHTML += `<p>The game finished.</p><table class="centered">${guessesList}</table>`;
         document.getElementById('game-in-progress').classList.remove('hidden');
     }
 
