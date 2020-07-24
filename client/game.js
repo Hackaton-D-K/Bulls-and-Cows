@@ -16,7 +16,7 @@ async function composeGuessesList() {
             cows = `<img class="b-c-image" src="client/cow.svg" alt="cows">: ${guess.cows}`;
             verify = `<a href="#" onclick="verifyProof(${i});return false;">Verify proof</a>`;
         } else if (guess.status == 0 && accounts[0].toLocaleLowerCase() === game.host.toLocaleLowerCase()) {
-            verify = `<a href="#" onclick="verifyGuess(${i});return false;">Verify guess</a>`;
+            verify = `<a href="#" onclick="respondGuess(${i});return false;">Respond Guess</a>`;
         }
         guessesList += `<tr><td>Guess ${i}</td><td>${symbols}</td><td>${bulls}</td><td>${cows}</td><td><span id="verify-guess-${i}">${verify}</span></td></tr>`;
     }
@@ -91,7 +91,7 @@ async function makeGuess() {
     }, false);
 }
 
-async function verifyGuess(guessId) {
+async function respondGuess(guessId) {
     const guess = await myContract.methods.getGuess(gameId, guessId).call();
     document.getElementById('verify-guess-form').classList.remove('hidden');
     document.getElementById('new-guess-form').classList.add('hidden');
