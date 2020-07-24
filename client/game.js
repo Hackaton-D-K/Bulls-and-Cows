@@ -46,7 +46,7 @@ async function load() {
     document.getElementById('bet').innerText = web3.utils.fromWei(game.value, 'ether');
     const remainingGuesses = parseInt(game.guessNumber) - parseInt(game.guessCounter);
     document.getElementById('guesses').innerText = remainingGuesses;
-    if (game.status == 0 || game.status == 1) {
+    if (game.status == 1) {
         document.getElementById('yourbet').classList.add('hidden');
         const makeNewGuessBlock = remainingGuesses > 0 ? `<button class="button" onclick="makeGuess();return false;">Make Guess</button>` : '';
         let guessesList = await composeGuessesList();
