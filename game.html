@@ -28,22 +28,22 @@
     <div id="game">
         <p>The game with <span id="host"></span> for <span id="bet"></span> ETH.</p>
         <p>You have <span id="guesses"></span> guesses.</p>
+        <p>The word contains 8 symbols.</p>
         <div class="yourbet" id="yourbet">
             <form id="bet-form" name="bet-form">
                 <input class="button" type="submit" id="bet-submit" name="bet-submit" value="Start Game"/>
             </form>
         </div>
-        <div id="game-in-progress" class="hidden">
+        <div id="game-in-progress" class="hidden center-text">
             <div id="guess-list">
             </div>
-            <button class="button" onclick="finalizeGame();return false;">Finalize Game</button>
         </div>
-        <div id="new-guess">
+        <div id="new-guess" class="center-text">
             <form class="hidden" id="new-guess-form">
                 <h2>Make a Guess</h2>
                 <div>
                     <label>
-                        Symbols (all ASCII characters are supported)
+                        <span class="label-text">Symbols (all ASCII characters are supported)</span>
                         <input class="symbol" id="symbol0" name="symbol0" type="text" data-mask="_"/>
                         <input class="symbol" id="symbol1" name="symbol1" type="text" data-mask="_"/>
                         <input class="symbol" id="symbol2" name="symbol2" type="text" data-mask="_"/>
@@ -60,12 +60,13 @@
                 </div>
             </form>
         </div>
-        <div id="verify-guess">
+        <div id="verify-guess" class="center-text">
             <form class="hidden" id="verify-guess-form">
                 <h2>Verify Guess</h2>
+                <div id="verify-error"></div>
                 <div>
                     <label>
-                        Solution
+                        <span class="label-text">Solution</span>
                         <input class="symbol" id="symbol0-verify" name="symbol0-verify" type="text" data-mask="_"/>
                         <input class="symbol" id="symbol1-verify" name="symbol1-verify" type="text" data-mask="_"/>
                         <input class="symbol" id="symbol2-verify" name="symbol2-verify" type="text" data-mask="_"/>
@@ -78,7 +79,7 @@
                 </div>
                 <div>
                     <label>
-                        Nonce
+                        <span class="label-text">Nonce</span>
                         <input id="nonce" name="nonce" type="text"/>
                     </label>
                 </div>
@@ -90,8 +91,11 @@
         </div>
     </div>
 </div>
-
-<a href="https://your-url" class="github-corner" aria-label="View source on GitHub">
+<footer class="footer">
+    Icons made by <a href="https://www.flaticon.com/authors/freepik" title="Freepik">Freepik</a> from <a
+        href="https://www.flaticon.com/" title="Flaticon"> www.flaticon.com</a>
+</footer>
+<a href="https://github.com/Hackaton-D-K/Bulls-and-Cows" class="github-corner" aria-label="View source on GitHub">
     <svg width="80" height="80" viewBox="0 0 250 250"
          style="fill:#151513; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true">
         <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
@@ -101,7 +105,5 @@
               fill="currentColor" class="octo-body"></path>
     </svg>
 </a>
-Icons made by <a href="https://www.flaticon.com/authors/freepik" title="Freepik">Freepik</a> from <a
-        href="https://www.flaticon.com/" title="Flaticon"> www.flaticon.com</a>
 </body>
 </html>

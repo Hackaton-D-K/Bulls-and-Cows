@@ -43,6 +43,14 @@ td {
     color: red;
 }
 
+.wide {
+    width: 100%;
+}
+
+.footer {
+    font-size: .4em;
+}
+
 .hidden {
     display: none;
 }
