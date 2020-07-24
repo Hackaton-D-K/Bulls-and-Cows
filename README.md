@@ -24,24 +24,24 @@ The game would continue until someone scores "4 Bulls" for guessing HEAT exactly
 For first view it isn't hard to implement Bulls and Cows game using smart contracts.
 But there is the pinfall - how can Host to prove their response without revealing the secret word?
 Here zero knowledge proofs appear. Host can respond for each guess with appropriate zk-proof
-which cryptographically proves that response corresponds secret and guess words without revealing the
+which cryptographically proves that response corresponds to the secret and guess words without revealing the
 secret word. Looks like another beautiful zkp application!
  
 So we are going to implement Bulls&Cows game on Ethereum which game play is as follows:
 - Anyone can create a new game. Choose the secret word (ASCII) with sol (prevent Brute force attack).
 Hash from secret word and sol is stored on contract. Choose game value (in ETH) -  both parties deposit this value when the game starts and the winner gets double value. Choose guess number - for victory Player should guess secret word in this number of attempts.
-- Anyone can view open games with their parameters (value, word length, guess number) and participate in available games. Player should deposit game value (in ETH) in this step.
-- Player can send guesses - no more than game guess number.
-- Host can send responses for guess with zk-proof of response validity.
-- Anyone can check proof in their web browser and if it is wrong challenge it in the smart contract. If proof is wrong Player immediately wins and gets all game value.
-- Anyone can force stop game if the opponent doesn't answer for more than 1 hour.
+- Anyone can view open games with their parameters (value, word length, guess number) and participate in available games. Player should deposit a bet (in ETH) in this step.
+- Player can send guesses - no more than game guesses number.
+- Host can send responses for the guess with zk-proof of response validity.
+- Anyone can check proof in their web browser and, if it is wrong, challenge it in the smart contract. If the proof is wrong Player immediately wins and gets all game value.
+- Anyone can force stop the game if the opponent doesn't answer for more than 1 hour.
 If successful, the user immediately wins and gets all game value (ETH funds).
-- Anyone can finalize game: if all attempts are spent and the word is not guessed -
+- Anyone can finalize the game: if all attempts are spent and the word is not guessed -
 Host wins and gets game value; or if the word is guessed in any attempt - Player
 wins and gets game value.
 ## Technical implementation
 [Solidity smart contracts](https://github.com/Hackaton-D-K/Bulls-and-Cows/tree/master/truffle) is used as game backend.
-Game and financial functionality as long as games data are stored in the Ethereum blockchain.
+Gaming and financial functionality as long as games data are stored in the Ethereum blockchain.
 
 [Zk part](https://github.com/Hackaton-D-K/Bulls-and-Cows/tree/master/zk) of the project is implemented using [circom](https://github.com/iden3/circom) and [wasmsnark](https://github.com/iden3/wasmsnark) libraries. These libraries generate wasm prover and verifier which allow generating and verifying proofs in web browser effectively. As proofs are generated and verified off chain it is free and only in case of Host cheating on chain proof verification is needed.
 
